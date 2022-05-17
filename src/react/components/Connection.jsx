@@ -4,14 +4,34 @@ function Connection() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [apiResponse, setApiResponse] = useState({
+    data: [],
+    loading: true,
+  });
 
-  function signIn() {
+  function signIn(e) {
+    e.preventDefault();
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ firstName: firstName, lastName: lastName }),
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+      }),
     };
-    fetch("api/persons", requestOptions);
+    fetch("api/connection", requestOptions)
+      .then((res) => res.json())
+      .then((data) =>
+        setApiResponse({
+          data: data,
+          loading: false,
+        })
+      );
+    console.log(apiResponse);
+    if (apiResponse.data === "-1") {
+      alert("This user exists");
+    }
   }
 
   return (
@@ -53,7 +73,7 @@ function Connection() {
 
             <button
               className='btn btn-lg btn-primary btn-block'
-              onClick={() => signIn()}>
+              onClick={(e) => signIn(e)}>
               Sign in
             </button>
           </form>

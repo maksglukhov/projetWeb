@@ -5,11 +5,15 @@ const port = 3000;
 const fs = require("fs");
 const persons = require("./routes/persons");
 const events = require("./routes/events");
+const connection = require("./routes/connection");
+var cookieParser = require("cookie-parser");
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use("/api/persons", persons);
 app.use("/api/events", events);
+app.use("/api/connection", connection);
 
 app.get("/*", (req, res) => {
   let filePath = "./src/node/index.html";

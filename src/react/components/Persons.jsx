@@ -17,8 +17,28 @@ function Persons() {
       );
   }, []);
 
-  if (apiResponse.loading) return <h1>LOADING ...</h1>;
+  if (apiResponse.loading) return <h1></h1>;
 
+  function deletePerson(id) {
+    console.log(id);
+    const requestOptions = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: id }),
+    };
+    fetch("api/persons", requestOptions)
+      .then((res) => res.json())
+      .then((data) =>
+        setApiResponse({
+          data: data,
+          loading: false,
+        })
+      );
+  }
+
+  if (apiResponse.data === "-1") {
+    alert("User exists already");
+  }
   return (
     <div className='container'>
       <ul className='card'>
@@ -28,6 +48,7 @@ function Persons() {
               <th scope='col'>id</th>
               <th scope='col'>First name</th>
               <th scope='col'>Last name</th>
+              <th scope='col'></th>
             </tr>
           </thead>
           <tbody>
@@ -36,6 +57,13 @@ function Persons() {
                 <td>{e.id}</td>
                 <td>{e.first_name}</td>
                 <td>{e.last_name}</td>
+                <td>
+                  <button
+                    className='btn btn-danger'
+                    onClick={() => deletePerson(e.id)}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
