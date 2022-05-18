@@ -2,23 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Connection() {
+function Signin({ refreshMenu }) {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [apiResponse, setApiResponse] = useState({
     data: null,
     loading: true,
   });
-
-  //console.log("---------------------------------------");
-  //console.log(apiResponse.data);
-  if (apiResponse.data === "-1") {
-    alert("This user exists");
-  } else if (apiResponse.data == "0") {
-    navigate("/events");
-  }
 
   function signIn(e) {
     e.preventDefault();
@@ -28,22 +21,27 @@ function Connection() {
       body: JSON.stringify({
         firstName: firstName,
         lastName: lastName,
+        username: username,
         password: password,
       }),
     };
     fetch("api/connection/createuser", requestOptions)
-      .then((res) => res.json())
-      .then((data) => {
-        //console.log(data);
-        setApiResponse({
-          data: data,
-          loading: false,
-        });
+      .then((res) => {
+        //console.log("log de res", res);
+        if (res.status !== 200) {
+          throw new Error("error");
+        }
+        refreshMenu();
+        navigate("/events");
+      })
+      .catch((e) => {
+        console.log("log", e);
+        alert("username already exists");
       });
   }
 
   if (Cookies.get("token")) {
-    console.log(Cookies.get("token"));
+    //console.log(Cookies.get("token"));
     return <div>There is cookie</div>;
   }
 
@@ -72,6 +70,16 @@ function Connection() {
               required
               onChange={(e) => setLastName(e.target.value)}
             />
+            <label className='sr-only'>username</label>
+            <input
+              type='Username'
+              id='inputUsername'
+              className='form-control'
+              placeholder='Username'
+              required
+              autoFocus
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <label htmlFor='inputPassword' className='sr-only'>
               Password
             </label>
@@ -94,4 +102,4 @@ function Connection() {
   );
 }
 
-export default Connection;
+export default Signin;

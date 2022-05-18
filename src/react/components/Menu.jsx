@@ -13,17 +13,22 @@ import Home from "./Home";
 import SignIn from "./SignIn";
 import LogIn from "./LogIn";
 import Cookies from "js-cookie";
+import Logout from "./Logout";
 
 //verif new user
-//changed menu
+//change menu
 //clé étrangére in token
 //to meny re render
 
 function Menu() {
   const [isLogged, setIsLogged] = useState(false);
-  if (Cookies.get("token")) {
-    setIsLogged(true);
-  }
+
+  const refreshMenu = () => {
+    if (Cookies.get("token")) {
+      console.log("aze");
+      setIsLogged(true);
+    } else setIsLogged(false);
+  };
   return (
     <Router>
       <div>
@@ -53,6 +58,9 @@ function Menu() {
                   <Link to='/login'>Log in</Link>
                 )}
               </li>
+              <li className='nav-item'>
+                <Link to='/logout'>Log out</Link>
+              </li>
             </ul>
           </div>
           {/*
@@ -66,8 +74,15 @@ function Menu() {
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/persons' element={<Persons></Persons>}></Route>
           <Route path='/events' element={<Events></Events>}></Route>
-          <Route path='/createuser' element={<SignIn></SignIn>}></Route>
-          <Route path='/login' element={<LogIn></LogIn>}></Route>
+          <Route
+            path='/createuser'
+            element={<SignIn refreshMenu={refreshMenu}></SignIn>}></Route>
+          <Route
+            path='/login'
+            element={<LogIn refreshMenu={refreshMenu}></LogIn>}></Route>
+          <Route
+            path='/logout'
+            element={<Logout refreshMenu={refreshMenu}></Logout>}></Route>
         </Routes>
       </div>
     </Router>
