@@ -10,9 +10,20 @@ import {
 import Events from "./Events";
 import Persons from "./Persons";
 import Home from "./Home";
-import Connection from "./Connection";
+import SignIn from "./SignIn";
+import LogIn from "./LogIn";
+import Cookies from "js-cookie";
+
+//verif new user
+//changed menu
+//clé étrangére in token
+//to meny re render
 
 function Menu() {
+  const [isLogged, setIsLogged] = useState(false);
+  if (Cookies.get("token")) {
+    setIsLogged(true);
+  }
   return (
     <Router>
       <div>
@@ -29,7 +40,18 @@ function Menu() {
                 <Link to='/events'>Events</Link>
               </li>
               <li className='nav-item'>
-                <Link to='/connection'>Connection</Link>
+                {isLogged ? (
+                  <Link to='/logout'>Log out</Link>
+                ) : (
+                  <Link to='/createuser'>Sign in</Link>
+                )}
+              </li>
+              <li className='nav-item'>
+                {isLogged ? (
+                  <Link to='/logout'>Log out</Link>
+                ) : (
+                  <Link to='/login'>Log in</Link>
+                )}
               </li>
             </ul>
           </div>
@@ -44,7 +66,8 @@ function Menu() {
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/persons' element={<Persons></Persons>}></Route>
           <Route path='/events' element={<Events></Events>}></Route>
-          <Route path='/connection' element={<Connection></Connection>}></Route>
+          <Route path='/createuser' element={<SignIn></SignIn>}></Route>
+          <Route path='/login' element={<LogIn></LogIn>}></Route>
         </Routes>
       </div>
     </Router>
