@@ -1,4 +1,5 @@
 var express = require("express");
+const { get } = require("express/lib/response");
 var router = express.Router();
 const { v4 } = require("uuid");
 const pgClient = require("../db");
@@ -8,68 +9,62 @@ router.post("/createuser", async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const password = req.body.password;
+    const username = req.body.username;
     let id = v4();
     const newPerson = await pgClient.query(
-      "INSERT INTO person (id, first_name, last_name, password) VALUES($1, $2, $3, $4)",
-      [id, firstName, lastName, password]
+      "INSERT INTO person (id, first_name, last_name, password, username) VALUES($1, $2, $3, $4, $5)",
+      [id, firstName, lastName, password, username]
     );
-    let token = createToken(id);
-    res.cookie("token", token);
-    res.send("0");
+    let token = await createToken(id);
+    console.log("token in then", token);
+    res.cookie("token", token.tokenId);
+    res.sendStatus(200);
+    //console.log("token", token);
+    //res.cookie("token", token);
   } catch (error) {
-    res.send("-1");
-    console.error(error.message);
+    console.log(error.message);
+    res.sendStatus(400);
+    //console.error(error.message);
   }
 });
 
 router.post("/login", async (req, res) => {
   try {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
+    const username = req.body.username;
     const password = req.body.password;
     let id = v4();
     const newPerson = await pgClient.query(
-      "SELECT * FROM person WHERE first_name = $1 AND last_name = $2 AND password = $3",
-      [firstName, lastName, password]
+      "SELECT * FROM person WHERE username = $1 and password = $2",
+      [username, password]
     );
-    if (newPerson) {
-      let token = createToken(id);
+    if (newPerson.rows.length === 1) {
+      console.log("user id", newPerson.rows[0].id);
+      let token = await createToken(newPerson.rows[0].id);
+      console.log("41", token);
       res.cookie("token", token);
-      res.send("0");
-    } else res.send("wrong");
+      res.sendStatus(200);
+    } else res.sendStatus(403);
   } catch (error) {
-    res.send("-1");
     console.error(error.message);
   }
 });
 
-async function userExist(firstName, lastName) {
+router.get("/logout", async (req, res) => {
   try {
-    //console.log(firstName, lastName);
-    /*const allPersons = await pgClient.query("SELECT * FROM person");
-    console.log(allPersons.rows);
-    let person = allPersons.rows.find(
-      (element) =>
-        element.first_name === firstName && element.last_name === lastName
+    //let tokenId = req.cookies("token");
+    //console.log(tokenId);
+    //res.clearCookie('token');
+    //console.log(req.cookies.token.tokenId);
+    const delToken = await pgClient.query(
+      "DELETE FROM token WHERE token = $1",
+      [req.cookies.token.tokenId]
     );
-    console.log("***************");
-    console.log(person);
-    return person;*/
-
-    const findPerson = await pgClient.query(
-      "SELECT * FROM person WHERE first_name = $1 AND last_name = $2",
-      [firstName, lastName]
-    );
-    console.log(findPerson.rows.length);
-    if (findPerson.rows.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
+    res.clearCookie("token");
+    res.sendStatus(200);
   } catch (error) {
     console.error(error.message);
   }
-}
+});
 
 async function createToken(userId) {
   try {
@@ -77,13 +72,14 @@ async function createToken(userId) {
     var time = Date.now() / 1000;
     console.log(time);
     let lifetimeToken = time + 1200;
-    console.log(lifetimeToken);
+    console.log(lifetimeToken, tokenId, userId);
+
     const getToken = await pgClient.query(
       "INSERT INTO token(token, user_id, expired_date) VALUES ($1, $2, $3)",
       [tokenId, userId, lifetimeToken]
     );
-    let token = { tokeId: tokenId };
-    console.log(tokenId);
+    let token = { tokenId: tokenId };
+    console.log("71", token);
     return token;
   } catch (error) {
     console.log(error.message);

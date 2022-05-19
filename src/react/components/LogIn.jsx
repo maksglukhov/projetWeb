@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Connection() {
+function Login({ refreshMenu }) {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [apiResponse, setApiResponse] = useState({
     data: null,
     loading: true,
@@ -26,19 +25,22 @@ function Connection() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        firstName: firstName,
-        lastName: lastName,
+        username: username,
         password: password,
       }),
     };
     fetch("api/connection/login", requestOptions)
-      .then((res) => res.json())
-      .then((data) => {
-        //console.log(data);
-        setApiResponse({
-          data: data,
-          loading: false,
-        });
+      .then((res) => {
+        //console.log("log de res", res);
+        if (res.status !== 200) {
+          throw new Error("error");
+        }
+        refreshMenu();
+        navigate("/events");
+      })
+      .catch((e) => {
+        console.log("log", e);
+        alert("Wrong username or password");
       });
   }
 
@@ -57,33 +59,20 @@ function Connection() {
       <div className='input-group mb-3 justify-content-center'>
         <div className='input-group-prepend text-center'>
           <form className='form-signin' onSubmit={(e) => signIn(e)}>
-            <h1 className='h3 mb-3 font-weight-normal'>Please sign in</h1>
+            <h1 className='h3 mb-3 font-weight-normal'>Please log in</h1>
             <div className={styleClassNameDiv}>
-              <label className={styleClassNameLabel}>First Name</label>
+              <label className={styleClassNameLabel}>Username</label>
               <input
-                type='firstname'
-                id='inputFirstName'
+                type='username'
+                id='inputUsername'
                 className={styleClassNameInput}
-                placeholder='First name'
+                placeholder='Username'
                 required
-                autoFocus
-                onChange={(e) => setFirstName(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
                 style={{boxShadow:"2px 1px 1px"}}
               />
             </div>
-            <div className={styleClassNameDiv} >
-              <label className={styleClassNameLabel}>Last name</label>
-              <input
-                type='lastname'
-                id='inputLastName'
-                className={styleClassNameInput}
-                placeholder='Last name'
-                required
-                onChange={(e) => setLastName(e.target.value)}
-                style={{boxShadow:"2px 1px 1px"}}
-              />
-            </div>
-            <div className={styleClassNameDiv} >
+            <div className={styleClassNameDiv}>
               <label htmlFor='inputPassword' className={styleClassNameLabel}>
                 Password
               </label>
@@ -105,4 +94,4 @@ function Connection() {
   );
 }
 
-export default Connection;
+export default Login;

@@ -16,6 +16,11 @@ router.get("/", async (req, res) => {
 router.delete("/", async (req, res) => {
   try {
     const id = req.body.id;
+    //console.log(req.cookies);
+    const delToken = await pgClient.query(
+      "DELETE FROM token WHERE user_id = $1",
+      [id]
+    );
     const delPerson = await pgClient.query("DELETE FROM person WHERE id = $1", [
       id,
     ]);
