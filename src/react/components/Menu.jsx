@@ -73,9 +73,6 @@ function Menu() {
                 <li className={styleClassNameLi}>
                   <Link to='/login'>Log in</Link>
                 </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/logout'>Log out</Link>
-                </li>
               </ul>
             )}
           </div>
