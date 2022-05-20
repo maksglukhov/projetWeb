@@ -77,7 +77,6 @@ function Signin({ refreshMenu }) {
               className='form-control'
               placeholder='Username'
               required
-              autoFocus
               onChange={(e) => setUsername(e.target.value)}
             />
             <label htmlFor='inputPassword' className='sr-only'>

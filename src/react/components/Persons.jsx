@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Persons() {
+function Persons({ admin }) {
   const [apiResponse, setApiResponse] = useState({
     data: {},
     loading: true,
@@ -19,10 +19,10 @@ function Persons() {
 
   if (apiResponse.loading) return <h1></h1>;
 
-  function deletePerson(id) {
+  function logOutPerson(id) {
     console.log(id);
     const requestOptions = {
-      method: "DELETE",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: id }),
     };
@@ -58,11 +58,15 @@ function Persons() {
                 <td>{e.first_name}</td>
                 <td>{e.last_name}</td>
                 <td>
-                  <button
-                    className='btn btn-danger'
-                    onClick={() => deletePerson(e.id)}>
-                    Delete
-                  </button>
+                  {admin ? (
+                    <button
+                      className='btn btn-danger'
+                      onClick={() => logOutPerson(e.id)}>
+                      Log out
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
                 </td>
               </tr>
             ))}

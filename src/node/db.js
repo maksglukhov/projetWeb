@@ -5,6 +5,8 @@ dotenv.config();
 console.log("connecting to", process.env.POSTGRESQL_ADDON_URI);
 
 const pgClient = new pg.Client(process.env.POSTGRESQL_ADDON_URI);
-pgClient.connect();
+if (pgClient.connect()) {
+  console.log("db connected");
+}
 
 module.exports = pgClient;

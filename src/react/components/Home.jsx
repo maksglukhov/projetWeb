@@ -1,7 +1,10 @@
 import React from "react";
 
-function Home() {
-  return <div>Hello world</div>;
+function Home({ admin }) {
+  console.log("is admin", admin);
+  if (admin) {
+    return <div>You are admin</div>;
+  } else return <div>Hello world</div>;
 }
 
 export default Home;

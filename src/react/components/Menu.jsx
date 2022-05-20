@@ -22,13 +22,18 @@ import Logout from "./Logout";
 
 function Menu() {
   const [isLogged, setIsLogged] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
   const refreshMenu = () => {
     if (Cookies.get("token")) {
-      console.log("aze");
       setIsLogged(true);
     } else setIsLogged(false);
   };
+
+  const setIsAdmin = (value) => {
+    setAdmin(value);
+  };
+
   return (
     <Router>
       <div>
@@ -71,15 +76,21 @@ function Menu() {
         </nav>
 
         <Routes>
-          <Route path='/' element={<Home></Home>}></Route>
-          <Route path='/persons' element={<Persons></Persons>}></Route>
-          <Route path='/events' element={<Events></Events>}></Route>
+          <Route path='/' element={<Home admin={admin}></Home>}></Route>
+          <Route
+            path='/persons'
+            element={<Persons admin={admin}></Persons>}></Route>
+          <Route
+            path='/events'
+            element={<Events admin={admin}></Events>}></Route>
           <Route
             path='/createuser'
             element={<SignIn refreshMenu={refreshMenu}></SignIn>}></Route>
           <Route
             path='/login'
-            element={<LogIn refreshMenu={refreshMenu}></LogIn>}></Route>
+            element={
+              <LogIn refreshMenu={refreshMenu} setIsAdmin={setIsAdmin}></LogIn>
+            }></Route>
           <Route
             path='/logout'
             element={<Logout refreshMenu={refreshMenu}></Logout>}></Route>
@@ -90,81 +101,3 @@ function Menu() {
 }
 
 export default Menu;
-
-/*
-
-<Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/persons'>Persons</Link>
-            </li>
-          </ul>
-        </nav>
-
-        <Routes>
-          <Route path='/' element={<Home></Home>}></Route>
-          <Route path='/persons' element={<Persons></Persons>}></Route>
-        </Routes>
-      </div>
-    </Router>
-
-    function Menu() {
-  const elem = [
-    {
-      key: "btnHome",
-      name: "Home",
-      link: "/",
-      component: <Home />,
-    },
-    {
-      key: "btnPersons",
-      name: "Persons",
-      link: "/persons",
-      component: <Persons />,
-    },
-
-    {
-      key: "btnEvents",
-      name: "Events",
-      link: "/events",
-      component: <Events />,
-    },
-  ];
-
-  
-  return (
-    <div className='grid-app'>
-      <Router>
-        <div className='sidebar d-flex '>
-          <ul>
-            {aff.map((d, key) => (
-              <li key={key}>
-                <NavLink to={d.link} activeClassName='active'>
-                  {d.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div
-          className='bg-light main-content d-flex'
-          style={{ minHeight: "100vh", padding: "0" }}>
-          <Switch>
-            {elem.map((d, key) => (
-              <Route key={key} path={d.link}>
-                {d.component}
-              </Route>
-            ))}
-          </Switch>
-        </div>
-      </Router>
-    </div>
-  );
-}
-*/

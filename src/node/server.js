@@ -14,6 +14,7 @@ app.use(cookieParser());
 app.use("/api/persons", persons);
 app.use("/api/events", events);
 app.use("/api/connection", connection);
+//app.use("/api/admin", admin);
 
 app.get("/*", (req, res) => {
   let filePath = "./src/node/index.html";
@@ -28,5 +29,5 @@ app.get("/*", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server has started on port ${port}");
+  console.log("Server has started on port", port);
 });

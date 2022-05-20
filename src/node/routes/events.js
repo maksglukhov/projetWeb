@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const allEvents = await pgClient.query("SELECT * FROM planning");
-    console.log(allEvents.rows);
+    //console.log(allEvents.rows);
     res.send(allEvents.rows);
   } catch (error) {
     console.error(error.message);

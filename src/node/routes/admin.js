@@ -3,16 +3,23 @@ var router = express.Router();
 const { v4 } = require("uuid");
 const pgClient = require("../db");
 
-router.delete("/", async (req, res) => {
-  try {
-    const id = req.body.id;
-    const delPerson = await pgClient.query("DELETE FROM person WHERE id = $1", [
-      id,
-    ]);
-    const allPersons = await pgClient.query("SELECT * FROM person");
-    res.send(allPersons.rows);
-  } catch (error) {
-    console.error(error.message);
+router.get("/", async (req, res) => {
+  if (req.cookies && req.cookies.token && req.cookies.token.tokenId) {
+    let tokenId = req.cookies.token.tokenId;
+    try {
+      const isAdmin = await pgClient.query(
+        "SELECT isAdmin FROM person, token WHERE person.id = token.user_id AND token.token = $1",
+        [tokenId]
+      );
+      if (isAdmin.rows[0]) {
+        res.sendStatus(200);
+      } else {
+        res.sendStatus(401);
+      }
+    } catch (error) {
+      res.sendStatus(401);
+      console.error(error.message);
+    }
   }
 });
 

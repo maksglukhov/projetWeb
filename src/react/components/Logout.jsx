@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 
 function Logout({ refreshMenu }) {
   const navigate = useNavigate();
+
   function logOut(e) {
     e.preventDefault();
     fetch("api/connection/logout")
@@ -23,7 +24,7 @@ function Logout({ refreshMenu }) {
   return (
     <div>
       <form onSubmit={(e) => logOut(e)}>
-        <button className='btn-primary danger'>Log out</button>
+        <button className='btn btn-lg btn-danger btn-block'>Log out</button>
       </form>
     </div>
   );

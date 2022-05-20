@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Events() {
+function Events({ admin }) {
   const [event, setEvent] = useState("");
   const [apiResponse, setApiResponse] = useState({
     data: [],
@@ -14,7 +14,8 @@ function Events() {
     console.log(date);
   }
 
-  function sendEvent() {
+  function sendEvent(e) {
+    e.preventDefault();
     //console.log(event);
     const requestOptions = {
       method: "POST",
@@ -65,27 +66,30 @@ function Events() {
 
   return (
     <div className='container'>
-      <div className='input-group mb-3'>
-        <div className='input-group-prepend'>
-          <form className='form-inline' onSubmit={() => sendEvent()}>
-            <input
-              className='form-control'
-              id='event'
-              type='text'
-              required
-              onChange={(e) => setEvent(e.target.value)}
-            />
-            <input
-              className='form-control'
-              type='date'
-              required
-              onChange={(e) => setDate(e.target.value)}
-            />
-
-            <button className='btn btn-primary'>Add event</button>
-          </form>
+      {admin ? (
+        <div className='input-group mb-3'>
+          <div className='input-group-prepend'>
+            <form className='form-inline' onSubmit={(e) => sendEvent(e)}>
+              <input
+                className='form-control'
+                id='event'
+                type='text'
+                required
+                onChange={(e) => setEvent(e.target.value)}
+              />
+              <input
+                className='form-control'
+                type='date'
+                required
+                onChange={(e) => setDate(e.target.value)}
+              />
+              <button className='btn btn-primary'>Add event</button>
+            </form>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div></div>
+      )}
 
       <table className='table table-striped'>
         <thead className='thead-dark'>
@@ -103,11 +107,15 @@ function Events() {
               <td>{e.name}</td>
               <td>{e.date}</td>
               <td>
-                <button
-                  className='btn btn-danger'
-                  onClick={() => deleteEvent(e.id)}>
-                  Delete
-                </button>
+                {admin ? (
+                  <button
+                    className='btn btn-danger'
+                    onClick={() => deleteEvent(e.id)}>
+                    Delete
+                  </button>
+                ) : (
+                  <div></div>
+                )}
               </td>
             </tr>
           ))}
