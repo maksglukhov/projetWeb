@@ -73,7 +73,6 @@ function Login({ refreshMenu, setIsAdmin }) {
                 placeholder='Username'
                 required
                 onChange={(e) => setUsername(e.target.value)}
-                style={{ boxShadow: "2px 1px 1px" }}
               />
             </div>
             <div className={styleClassNameDiv}>
@@ -87,14 +86,9 @@ function Login({ refreshMenu, setIsAdmin }) {
                 placeholder='Password'
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ boxShadow: "2px 1px 1px" }}
               />
             </div>
-            <button
-              className='btn btn-lg btn-primary btn-block'
-              style={{ boxShadow: "2px 1px 1px" }}>
-              Log in
-            </button>
+            <button className='btn btn-lg btn-primary btn-block'>Log in</button>
           </form>
         </div>
       </div>

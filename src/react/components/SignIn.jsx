@@ -65,7 +65,6 @@ function Signin({ refreshMenu }) {
                 required
                 autoFocus
                 onChange={(e) => setFirstName(e.target.value)}
-                style={{ boxShadow: "2px 1px 1px" }}
               />
             </div>
 
@@ -78,7 +77,6 @@ function Signin({ refreshMenu }) {
                 placeholder='Last name'
                 required
                 onChange={(e) => setLastName(e.target.value)}
-                style={{ boxShadow: "2px 1px 1px" }}
               />
             </div>
 
@@ -91,7 +89,6 @@ function Signin({ refreshMenu }) {
                 placeholder='Username'
                 required
                 onChange={(e) => setUsername(e.target.value)}
-                style={{ boxShadow: "2px 1px 1px" }}
               />
             </div>
 
@@ -106,7 +103,6 @@ function Signin({ refreshMenu }) {
                 placeholder='Password'
                 required
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ boxShadow: "2px 1px 1px" }}
               />
             </div>
 
