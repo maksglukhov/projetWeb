@@ -38,37 +38,46 @@ function Menu() {
 
   return (
     <Router>
-      <div >
-        <nav className='navbar navbar-expand-lg navbar-light bg-light' >
+      <div>
+        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
           <div className='collapse navbar-collapse' id='navbarNav'>
-            <ul className='navbar-nav'>
-              <li className={styleClassNameLi}>
-                <Link to='/'>Home</Link>
-              </li>
-              <li className={styleClassNameLi}>
-                <Link to='/persons'>Persons</Link>
-              </li>
-              <li className={styleClassNameLi}>
-                <Link to='/events'>Events</Link>
-              </li>
-              <li className={styleClassNameLi}>
-                {isLogged ? (
+            {isLogged ? (
+              <ul className='navbar-nav'>
+                <li className={styleClassNameLi}>
+                  <Link to='/'>Home</Link>
+                </li>
+                <li className={styleClassNameLi}>
+                  <Link to='/persons'>Persons</Link>
+                </li>
+                <li className={styleClassNameLi}>
+                  <Link to='/events'>Events</Link>
+                </li>
+                <li className={styleClassNameLi}>
                   <Link to='/logout'>Log out</Link>
-                ) : (
+                </li>
+              </ul>
+            ) : (
+              <ul className='navbar-nav'>
+                <li className={styleClassNameLi}>
+                  <Link to='/'>Home</Link>
+                </li>
+                <li className={styleClassNameLi}>
+                  <Link to='/persons'>Persons</Link>
+                </li>
+                <li className={styleClassNameLi}>
+                  <Link to='/events'>Events</Link>
+                </li>
+                <li className={styleClassNameLi}>
                   <Link to='/createuser'>Sign in</Link>
-                )}
-              </li>
-              <li className={styleClassNameLi}>
-                {isLogged ? (
-                  <Link to='/logout'>Log out</Link>
-                ) : (
+                </li>
+                <li className={styleClassNameLi}>
                   <Link to='/login'>Log in</Link>
-                )}
-              </li>
-              <li className={styleClassNameLi}>
-                <Link to='/logout'>Log out</Link>
-              </li>
-            </ul>
+                </li>
+                <li className={styleClassNameLi}>
+                  <Link to='/logout'>Log out</Link>
+                </li>
+              </ul>
+            )}
           </div>
           {/*
           <a className="nav-item nav-link" href='/'>Home</a>
