@@ -55,35 +55,46 @@ function Login({ refreshMenu, setIsAdmin }) {
     return <div>There is cookie</div>;
   }
 
+  const styleClassNameInput = "form-control";
+  const styleClassNameLabel = "sr-only";
+  const styleClassNameDiv = "d-flex p-2";
   return (
     <div className='container'>
-      <div className='input-group mb-3'>
-        <div className='input-group-prepend'>
+      <div className='input-group mb-3 justify-content-center'>
+        <div className='input-group-prepend text-center'>
           <form className='form-signin' onSubmit={(e) => signIn(e)}>
             <h1 className='h3 mb-3 font-weight-normal'>Please log in</h1>
-            <label className='sr-only'>Username</label>
-            <input
-              type='username'
-              id='inputUsername'
-              className='form-control'
-              placeholder='Username'
-              required
-              autoFocus
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <label htmlFor='inputPassword' className='sr-only'>
-              Password
-            </label>
-            <input
-              type='password'
-              id='inputPassword'
-              className='form-control'
-              placeholder='Password'
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <button className='btn btn-lg btn-primary btn-block'>Log in</button>
+            <div className={styleClassNameDiv}>
+              <label className={styleClassNameLabel}>Username</label>
+              <input
+                type='username'
+                id='inputUsername'
+                className={styleClassNameInput}
+                placeholder='Username'
+                required
+                onChange={(e) => setUsername(e.target.value)}
+                style={{ boxShadow: "2px 1px 1px" }}
+              />
+            </div>
+            <div className={styleClassNameDiv}>
+              <label htmlFor='inputPassword' className={styleClassNameLabel}>
+                Password
+              </label>
+              <input
+                type='password'
+                id='inputPassword'
+                className={styleClassNameInput}
+                placeholder='Password'
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                style={{ boxShadow: "2px 1px 1px" }}
+              />
+            </div>
+            <button
+              className='btn btn-lg btn-primary btn-block'
+              style={{ boxShadow: "2px 1px 1px" }}>
+              Log in
+            </button>
           </form>
         </div>
       </div>

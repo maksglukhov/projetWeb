@@ -21,6 +21,8 @@ import Logout from "./Logout";
 //to meny re render
 
 function Menu() {
+  const styleClassNameLi = "nav-item p-2";
+
   const [isLogged, setIsLogged] = useState(false);
   const [admin, setAdmin] = useState(false);
 
@@ -36,34 +38,34 @@ function Menu() {
 
   return (
     <Router>
-      <div>
-        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+      <div >
+        <nav className='navbar navbar-expand-lg navbar-light bg-light' >
           <div className='collapse navbar-collapse' id='navbarNav'>
             <ul className='navbar-nav'>
-              <li className='nav-item'>
+              <li className={styleClassNameLi}>
                 <Link to='/'>Home</Link>
               </li>
-              <li className='nav-item'>
+              <li className={styleClassNameLi}>
                 <Link to='/persons'>Persons</Link>
               </li>
-              <li className='nav-item'>
+              <li className={styleClassNameLi}>
                 <Link to='/events'>Events</Link>
               </li>
-              <li className='nav-item'>
+              <li className={styleClassNameLi}>
                 {isLogged ? (
                   <Link to='/logout'>Log out</Link>
                 ) : (
                   <Link to='/createuser'>Sign in</Link>
                 )}
               </li>
-              <li className='nav-item'>
+              <li className={styleClassNameLi}>
                 {isLogged ? (
                   <Link to='/logout'>Log out</Link>
                 ) : (
                   <Link to='/login'>Log in</Link>
                 )}
               </li>
-              <li className='nav-item'>
+              <li className={styleClassNameLi}>
                 <Link to='/logout'>Log out</Link>
               </li>
             </ul>
