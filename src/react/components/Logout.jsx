@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Logout({ refreshMenu }) {
+function Logout({ setIsLogged, setIsAdmin }) {
   const navigate = useNavigate();
 
   function logOut(e) {
@@ -13,7 +13,8 @@ function Logout({ refreshMenu }) {
         if (res.status !== 200) {
           throw new Error("error");
         }
-        refreshMenu();
+        setIsAdmin(false);
+        setIsLogged(false);
         navigate("/");
       })
       .catch((e) => {

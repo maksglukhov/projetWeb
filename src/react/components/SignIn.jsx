@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Signin({ refreshMenu }) {
+function Signin({ setIsLogged }) {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -31,7 +31,7 @@ function Signin({ refreshMenu }) {
         if (res.status !== 200) {
           throw new Error("error");
         }
-        refreshMenu();
+        setIsLogged(false);
         navigate("/events");
       })
       .catch((e) => {

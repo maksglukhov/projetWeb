@@ -35,31 +35,41 @@ router.post("/createuser", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     if (await checkToken(req, res)) {
-      res.send(409);
-    }
-    const username = req.body.username;
-    const password = req.body.password;
-    let id = v4();
-    const newPerson = await pgClient.query(
-      "SELECT * FROM person WHERE username = $1 and password = $2",
-      [username, password]
-    );
+      console.log("connection log in status 409");
+      res.sendStatus(409);
+    } else {
+      //console.log("here*************");
+      const username = req.body.username;
+      const password = req.body.password;
+      let id = v4();
+      const newPerson = await pgClient.query(
+        "SELECT * FROM person WHERE username = $1 and password = $2",
+        [username, password]
+      );
 
-    if (newPerson.rows.length === 1) {
-      //console.log("user id", newPerson.rows[0].id);
-      console.log("connection: user exists");
-      let token = await createToken(newPerson.rows[0].id);
-      console.log("connection line: cookie", token);
-      res.cookie("token", token);
-      let isAdmin = await checkAdmin(token.tokenId);
-      if (isAdmin) {
-        console.log("**********************", isAdmin);
-        res.sendStatus(202);
+      if (newPerson.rows.length === 1) {
+        console.log("user id", newPerson.rows[0].id);
+        console.log("connection: user exists");
+        let token = await createToken(newPerson.rows[0].id);
+        console.log("connection line: cookie", token);
+        res.cookie("token", token);
+        //console.log("******************", req.cookies.token.tokenId);
+        console.log("indefined");
+        let isAdmin = await checkAdmin(token.tokenId);
+        if (isAdmin) {
+          console.log("here");
+          console.log("admin", isAdmin);
+          res.sendStatus(202);
+        } else {
+          //console.log("im here");
+          console.log("no admin", isAdmin);
+          res.sendStatus(200);
+        }
       } else {
-        console.log("**********************", isAdmin);
-        res.sendStatus(200);
+        console.log("here is problem");
+        res.sendStatus(403);
       }
-    } else res.sendStatus(403);
+    }
   } catch (error) {
     console.error(error.message);
   }

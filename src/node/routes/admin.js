@@ -2,22 +2,23 @@ var express = require("express");
 var router = express.Router();
 const { v4 } = require("uuid");
 const pgClient = require("../db");
+const { checkToken, checkAdmin } = require("../check.js");
 
-router.get("/", async (req, res) => {
-  if (req.cookies && req.cookies.token && req.cookies.token.tokenId) {
-    let tokenId = req.cookies.token.tokenId;
+router.post("/", async (req, res) => {
+  if (await checkAdmin(req, res)) {
     try {
-      const isAdmin = await pgClient.query(
-        "SELECT isAdmin FROM person, token WHERE person.id = token.user_id AND token.token = $1",
-        [tokenId]
+      console.log("******************");
+      //let tokenId = req.cookies("token");
+      //console.log(tokenId);
+      //res.clearCookie('token');
+      //console.log(req.cookies.token.tokenId);
+      const delToken = await pgClient.query(
+        "DELETE FROM token WHERE user_id = $1",
+        [req.body.id]
       );
-      if (isAdmin.rows[0]) {
-        res.sendStatus(200);
-      } else {
-        res.sendStatus(401);
-      }
+      res.clearCookie("token");
+      res.sendStatus(200);
     } catch (error) {
-      res.sendStatus(401);
       console.error(error.message);
     }
   }

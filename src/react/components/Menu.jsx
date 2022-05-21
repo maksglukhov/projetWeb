@@ -20,21 +20,11 @@ import Logout from "./Logout";
 //clé étrangére in token
 //to meny re render
 
-function Menu() {
+function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   const styleClassNameLi = "nav-item p-2";
 
-  const [isLogged, setIsLogged] = useState(false);
-  const [admin, setAdmin] = useState(false);
-
-  const refreshMenu = () => {
-    if (Cookies.get("token")) {
-      setIsLogged(true);
-    } else setIsLogged(false);
-  };
-
-  const setIsAdmin = (value) => {
-    setAdmin(value);
-  };
+  console.log("is logged in", isLogged);
+  //TODO fetch to get if logged and if admin
 
   return (
     <Router>
@@ -93,15 +83,19 @@ function Menu() {
             element={<Events admin={admin}></Events>}></Route>
           <Route
             path='/createuser'
-            element={<SignIn refreshMenu={refreshMenu}></SignIn>}></Route>
+            element={<SignIn setIsLogged={setIsLogged}></SignIn>}></Route>
           <Route
             path='/login'
             element={
-              <LogIn refreshMenu={refreshMenu} setIsAdmin={setIsAdmin}></LogIn>
+              <LogIn setIsLogged={setIsLogged} setIsAdmin={setIsAdmin}></LogIn>
             }></Route>
           <Route
             path='/logout'
-            element={<Logout refreshMenu={refreshMenu}></Logout>}></Route>
+            element={
+              <Logout
+                setIsLogged={setIsLogged}
+                setIsAdmin={setIsAdmin}></Logout>
+            }></Route>
         </Routes>
       </div>
     </Router>
