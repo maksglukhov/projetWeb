@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
         res.sendStatus(200);
       }
     } else {
-      console.log("here**********************");
+      //console.log("here**********************");
       res.sendStatus(400);
     }
   }

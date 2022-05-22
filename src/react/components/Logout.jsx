@@ -7,20 +7,17 @@ function Logout({ setIsLogged, setIsAdmin }) {
 
   function logOut(e) {
     e.preventDefault();
-    fetch("api/connection/logout")
-      .then((res) => {
-        //console.log("log de res", res);
-        if (res.status !== 200) {
-          throw new Error("error");
-        }
+    fetch("api/connection/logout").then((res) => {
+      //console.log("log de res", res);
+      if (res.status == 200) {
         setIsAdmin(false);
         setIsLogged(false);
+        alert("Log out done");
         navigate("/");
-      })
-      .catch((e) => {
-        console.log("log", e);
-        alert("error log out");
-      });
+      } else {
+        alert("Error log out");
+      }
+    });
   }
   return (
     <div>

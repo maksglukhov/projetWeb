@@ -76,20 +76,29 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-  try {
-    //let tokenId = req.cookies("token");
-    //console.log(tokenId);
-    //res.clearCookie('token');
-    //console.log(req.cookies.token.tokenId);
-    const delToken = await pgClient.query(
-      "DELETE FROM token WHERE token = $1",
-      [req.cookies.token.tokenId]
-    );
-    res.clearCookie("token");
-    res.sendStatus(200);
-  } catch (error) {
-    console.error(error.message);
-  }
+  if (req.cookies && req.cookies.token && req.cookies.token.tokenId) {
+    let tokenId = req.cookies.token.tokenId;
+    if (await checkToken(req, res)) {
+      try {
+        //let tokenId = req.cookies("token");
+        //console.log(tokenId);
+        //res.clearCookie('token');
+        //console.log(req.cookies.token.tokenId);
+        const delToken = await pgClient.query(
+          "DELETE FROM token WHERE token = $1",
+          [tokenId]
+        );
+        if (delToken) {
+          res.clearCookie("token");
+          res.sendStatus(200);
+        } else {
+          res.sendStatus(400);
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+  } else res.sendStatus(200);
 });
 
 async function createToken(userId) {
@@ -97,7 +106,7 @@ async function createToken(userId) {
     let tokenId = v4();
     var time = Date.now() / 1000;
     //console.log(time);
-    let lifetimeToken = time + 1200;
+    let lifetimeToken = time + 900;
     //console.log(lifetimeToken, tokenId, userId);
 
     const getToken = await pgClient.query(

@@ -32,7 +32,7 @@ function Login({ setIsLogged, setIsAdmin }) {
     fetch("api/connection/login", requestOptions).then((res) => {
       //console.log("log de res", res);
       if (res.status === 202) {
-        console.log("enter in status 200");
+        console.log("enter in status 202");
         setIsAdmin(true);
         setIsLogged(true);
         //refreshMenu();

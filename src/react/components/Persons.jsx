@@ -26,14 +26,15 @@ function Persons({ admin }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: id }),
     };
-    fetch("api/admin", requestOptions)
-      .then((res) => res.json())
-      .then((data) =>
-        setApiResponse({
-          data: data,
-          loading: false,
-        })
-      );
+    fetch("api/admin", requestOptions).then((res) => {
+      if (res.status == 200) {
+        alert("User disconnected");
+      } else if (res.status == 401) {
+        alert("You are not admin");
+      } else if (res.status == 403) {
+        alert("Your log in time expired");
+      }
+    });
   }
 
   if (apiResponse.data === "-1") {

@@ -14,7 +14,11 @@ function Mymenu() {
   const refreshMenu = () => {
     if (Cookies.get("token")) {
       setIsLogged(true);
-    } else setIsLogged(false);
+      setIsAdmin(admin);
+    } else {
+      setIsLogged(false);
+      setIsAdmin(admin);
+    }
   };
 
   const [isLogged, setIsLogged] = useState(false);
@@ -24,7 +28,7 @@ function Mymenu() {
       .then((res) => {
         //console.log("log de res", res);
         if (res.status === 202) {
-          console.log("enter in status 200");
+          console.log("enter in status 202");
           setIsAdmin(true);
           setIsLogged(true);
           //refreshMenu();

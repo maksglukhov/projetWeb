@@ -66,11 +66,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
               </ul>
             )}
           </div>
-          {/*
-          <a className="nav-item nav-link" href='/'>Home</a>
-          <a className="nav-item nav-link" href='/persons'>Persons</a>
-          <a className="nav-item nav-link" href='/events'>Events</a>
-          */}
         </nav>
 
         <Routes>

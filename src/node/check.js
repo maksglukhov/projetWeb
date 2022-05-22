@@ -63,7 +63,9 @@ async function existsToken(tokenId, res) {
 
 function checkTime(token) {
   let currentTime = Date.now() / 1000;
-  let tokenTime = token.rows[0].expired_date + 1200;
+  //console.log(currentTime);
+  let tokenTime = token.rows[0].expired_date;
+  console.log(token.rows[0].expired_date);
   if (currentTime < tokenTime) {
     return true;
   } else return false;
