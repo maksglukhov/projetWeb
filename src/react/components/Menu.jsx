@@ -22,6 +22,8 @@ import Logout from "./Logout";
 
 function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   const styleClassNameLi = "nav-item p-2";
+  const styleClassNameLiRight = "nav-item p-2 navbar-right";
+
 
   console.log("is logged in", isLogged);
   //TODO fetch to get if logged and if admin
@@ -32,38 +34,47 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
           <div className='collapse navbar-collapse' id='navbarNav'>
             {isLogged ? (
-              <ul className='navbar-nav'>
-                <li className={styleClassNameLi}>
-                  <Link to='/'>Home</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/persons'>Persons</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/events'>Events</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/logout'>Log out</Link>
-                </li>
-              </ul>
+              <>
+                <ul className='nav navbar-nav'>
+                  <li className={styleClassNameLi}>
+                    <Link to='/'>Home</Link>
+                  </li>
+                  <li className={styleClassNameLi}>
+                    <Link to='/persons'>Persons</Link>
+                  </li>
+                  <li className={styleClassNameLi}>
+                    <Link to='/events'>Events</Link>
+                  </li>
+                </ul>
+
+                <ul className='navbar-nav ml-auto flex-nowrap'>
+                  <li className={styleClassNameLiRight}>
+                    <Link to='/logout'>Log out</Link>
+                  </li>
+                </ul>
+              </>
             ) : (
-              <ul className='navbar-nav'>
-                <li className={styleClassNameLi}>
-                  <Link to='/'>Home</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/persons'>Persons</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/events'>Events</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/createuser'>Sign in</Link>
-                </li>
-                <li className={styleClassNameLi}>
-                  <Link to='/login'>Log in</Link>
-                </li>
-              </ul>
+              <>
+                <ul className='nav navbar-nav'>
+                  <li className={styleClassNameLi}>
+                    <Link to='/'>Home</Link>
+                  </li>
+                  <li className={styleClassNameLi}>
+                    <Link to='/persons'>Persons</Link>
+                  </li>
+                  <li className={styleClassNameLi}>
+                    <Link to='/events'>Events</Link>
+                  </li>
+                </ul>
+                <ul className='navbar-nav ml-auto flex-nowrap'>
+                  <li className={styleClassNameLiRight}>
+                    <Link to='/createuser'>Sign in</Link>
+                  </li>
+                  <li className={styleClassNameLiRight}>
+                    <Link to='/login'>Log in</Link>
+                  </li>
+                </ul>
+              </>
             )}
           </div>
         </nav>
