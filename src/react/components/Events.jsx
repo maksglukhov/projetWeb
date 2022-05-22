@@ -67,23 +67,29 @@ function Events({ admin }) {
   return (
     <div className='container'>
       {admin ? (
-        <div className='input-group mb-3'>
+        <div className='input-group mb-3 justify-content-center'>
           <div className='input-group-prepend'>
             <form className='form-inline' onSubmit={(e) => sendEvent(e)}>
-              <input
-                className='form-control'
-                id='event'
-                type='text'
-                required
-                onChange={(e) => setEvent(e.target.value)}
-              />
-              <input
-                className='form-control'
-                type='date'
-                required
-                onChange={(e) => setDate(e.target.value)}
-              />
-              <button className='btn btn-primary'>Add event</button>
+              <div className="p-2">
+                <input
+                  className='form-control'
+                  id='event'
+                  type='text'
+                  required
+                  onChange={(e) => setEvent(e.target.value)}
+                />
+              </div>
+              <div className="p-2">
+                <input
+                  className='form-control'
+                  type='date'
+                  required
+                  onChange={(e) => setDate(e.target.value)}
+                />
+              </div>
+              <div className="p-2">
+                <button className='btn btn-primary'>Add event</button>
+              </div>
             </form>
           </div>
         </div>
