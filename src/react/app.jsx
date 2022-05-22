@@ -32,12 +32,12 @@ function Mymenu() {
           setIsAdmin(true);
           setIsLogged(true);
           //refreshMenu();
-          navigate("/events");
+          //navigate("/events");
         } else if (res.status === 200) {
           setIsLogged(true);
           //refreshMenu();
           setIsAdmin(false);
-          navigate("/events");
+          //navigate("/events");
         } else {
           throw new Error("error");
         }

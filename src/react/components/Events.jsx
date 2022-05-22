@@ -9,6 +9,9 @@ function Events({ admin }) {
   const [date, setDate] = useState(new Date());
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const [mancheName, setMancheName] = useState("");
+  const [mancheOrdre, setMancheOrdre] = useState("");
+
   function test() {
     console.log(event);
     console.log(date);
@@ -39,6 +42,27 @@ function Events({ admin }) {
       body: JSON.stringify({ id: id }),
     };
     fetch("api/events", requestOptions)
+      .then((res) => res.json())
+      .then((data) =>
+        setApiResponse({
+          data: data,
+          loading: false,
+        })
+      );
+  }
+
+  function addMacnhe(e) {
+    e.preventDefault();
+    //console.log(event);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mancheName: mancheName,
+        mancheOrdre: mancheOrdre,
+      }),
+    };
+    fetch("api/events/manche", requestOptions)
       .then((res) => res.json())
       .then((data) =>
         setApiResponse({
@@ -97,7 +121,8 @@ function Events({ admin }) {
             <th scope='col'>id</th>
             <th scope='col'>Event</th>
             <th scope='col'>Date</th>
-            <th scope='col'></th>
+            {admin ? <th scope='col'>Delete event</th> : <th scope='col'></th>}
+            {admin ? <th scope='col'>Add manche</th> : <th scope='col'></th>}
           </tr>
         </thead>
         <tbody>
@@ -113,6 +138,31 @@ function Events({ admin }) {
                     onClick={() => deleteEvent(e.id)}>
                     Delete
                   </button>
+                ) : (
+                  <div></div>
+                )}
+              </td>
+              <td>
+                {admin ? (
+                  <form className='form-inline' onSubmit={(e) => addManche(e)}>
+                    <input
+                      className='form-control'
+                      id='event'
+                      type='text'
+                      placeholder='name of manche'
+                      required
+                      onChange={(e) => setMancheName(e.target.value)}
+                    />
+                    <input
+                      className='form-control'
+                      type='number'
+                      min={0}
+                      placeholder='ordre of manche'
+                      required
+                      onChange={(e) => setMancheOrdre(e.target.value)}
+                    />
+                    <button className='btn btn-primary'>Add manche</button>
+                  </form>
                 ) : (
                   <div></div>
                 )}

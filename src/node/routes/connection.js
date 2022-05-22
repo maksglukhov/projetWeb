@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
         console.log("connection line: cookie", token);
         res.cookie("token", token);
         //console.log("******************", req.cookies.token.tokenId);
-        console.log("indefined");
+        //console.log("undefined");
         let isAdmin = await checkAdmin(token.tokenId);
         if (isAdmin) {
           console.log("here");
@@ -90,6 +90,7 @@ router.get("/logout", async (req, res) => {
         );
         if (delToken) {
           res.clearCookie("token");
+          console.log("User has disconnected from server");
           res.sendStatus(200);
         } else {
           res.sendStatus(400);
