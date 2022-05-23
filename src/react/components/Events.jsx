@@ -6,6 +6,10 @@ function Events({ admin }) {
     data: [],
     loading: true,
   });
+  const [apiResponseManche, setApiResponseManche] = useState({
+    data: [],
+    loading: true,
+  });
   const [date, setDate] = useState(new Date());
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -51,25 +55,28 @@ function Events({ admin }) {
       );
   }
 
-  function addMacnhe(e) {
+  function addManche(e, id) {
     e.preventDefault();
     //console.log(event);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        eventId: id,
         mancheName: mancheName,
         mancheOrdre: mancheOrdre,
       }),
     };
     fetch("api/events/manche", requestOptions)
       .then((res) => res.json())
-      .then((data) =>
-        setApiResponse({
+      .then((data) => {
+        setApiResponseManche({
           data: data,
           loading: false,
-        })
-      );
+        });
+        console.log(apiResponseManche);
+      });
+    //console.log(id);
   }
 
   useEffect(() => {
@@ -94,7 +101,7 @@ function Events({ admin }) {
         <div className='input-group mb-3 justify-content-center'>
           <div className='input-group-prepend'>
             <form className='form-inline' onSubmit={(e) => sendEvent(e)}>
-              <div className="p-2">
+              <div className='p-2'>
                 <input
                   className='form-control'
                   id='event'
@@ -103,7 +110,7 @@ function Events({ admin }) {
                   onChange={(e) => setEvent(e.target.value)}
                 />
               </div>
-              <div className="p-2">
+              <div className='p-2'>
                 <input
                   className='form-control'
                   type='date'
@@ -111,7 +118,7 @@ function Events({ admin }) {
                   onChange={(e) => setDate(e.target.value)}
                 />
               </div>
-              <div className="p-2">
+              <div className='p-2'>
                 <button className='btn btn-primary'>Add event</button>
               </div>
             </form>
@@ -124,7 +131,6 @@ function Events({ admin }) {
       <table className='table table-striped'>
         <thead className='thead-dark'>
           <tr>
-            <th scope='col'>id</th>
             <th scope='col'>Event</th>
             <th scope='col'>Date</th>
             {admin ? <th scope='col'>Delete event</th> : <th scope='col'></th>}
@@ -132,16 +138,15 @@ function Events({ admin }) {
           </tr>
         </thead>
         <tbody>
-          {apiResponse.data.map((e, key) => (
+          {apiResponse.data.map((elem, key) => (
             <tr key={key}>
-              <td>{e.id}</td>
-              <td>{e.name}</td>
-              <td>{e.date}</td>
+              <td>{elem.name}</td>
+              <td>{elem.date}</td>
               <td>
                 {admin ? (
                   <button
                     className='btn btn-danger'
-                    onClick={() => deleteEvent(e.id)}>
+                    onClick={() => deleteEvent(elem.id)}>
                     Delete
                   </button>
                 ) : (
@@ -150,7 +155,9 @@ function Events({ admin }) {
               </td>
               <td>
                 {admin ? (
-                  <form className='form-inline' onSubmit={(e) => addManche(e)}>
+                  <form
+                    className='form-inline'
+                    onSubmit={(e) => addManche(e, elem.id)}>
                     <input
                       className='form-control'
                       id='event'
@@ -172,6 +179,24 @@ function Events({ admin }) {
                 ) : (
                   <div></div>
                 )}
+              </td>
+              <td>
+                <table className='table table-striped'>
+                  <thead className='thead'>
+                    <tr>
+                      <th scope='col'>manche</th>
+                      <th scope='col'>ordre</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {apiResponseManche.data.map((elem, key) => (
+                      <tr key={key}>
+                        <td>{elem.name}</td>
+                        <td>{elem.ordre}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </td>
             </tr>
           ))}

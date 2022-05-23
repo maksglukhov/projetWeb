@@ -44,4 +44,24 @@ router.delete("/", async (req, res) => {
   }
 });
 
+router.post("/manche", async (req, res) => {
+  const eventId = req.body.eventId;
+  console.log(eventId);
+  const mancheName = req.body.mancheName;
+  const mancheOrdre = req.body.mancheOrdre;
+  const mancheId = v4();
+  try {
+    const addMacnhe = await pgClient.query(
+      "INSERT INTO manche(id, name, ordre, planning_id) VALUES ($1, $2, $3, $4)",
+      [mancheId, mancheName, mancheOrdre, eventId]
+    );
+    if (addMacnhe) {
+      const allManche = await pgClient.query("SELECT * FROM manche");
+      if (allManche) {
+        res.send(allManche.rows);
+      }
+    }
+  } catch (error) {}
+});
+
 module.exports = router;
