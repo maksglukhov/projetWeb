@@ -139,66 +139,71 @@ function Events({ admin }) {
         </thead>
         <tbody>
           {apiResponse.data.map((elem, key) => (
-            <tr key={key}>
-              <td>{elem.name}</td>
-              <td>{elem.date}</td>
-              <td>
-                {admin ? (
-                  <button
-                    className='btn btn-danger'
-                    onClick={() => deleteEvent(elem.id)}>
-                    Delete
-                  </button>
-                ) : (
-                  <div></div>
-                )}
-              </td>
-              <td>
-                {admin ? (
-                  <form
-                    className='form-inline'
-                    onSubmit={(e) => addManche(e, elem.id)}>
-                    <input
-                      className='form-control'
-                      id='event'
-                      type='text'
-                      placeholder='name of manche'
-                      required
-                      onChange={(e) => setMancheName(e.target.value)}
-                    />
-                    <input
-                      className='form-control'
-                      type='number'
-                      min={0}
-                      placeholder='ordre of manche'
-                      required
-                      onChange={(e) => setMancheOrdre(e.target.value)}
-                    />
-                    <button className='btn btn-primary'>Add manche</button>
-                  </form>
-                ) : (
-                  <div></div>
-                )}
-              </td>
-              <td>
-                <table className='table table-striped'>
-                  <thead className='thead'>
-                    <tr>
-                      <th scope='col'>manche</th>
-                      <th scope='col'>ordre</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {apiResponseManche.data.map((elem, key) => (
-                      <tr key={key}>
-                        <td>{elem.name}</td>
-                        <td>{elem.ordre}</td>
+            <>
+              <tr key={key}>
+                
+                <td>{elem.name}</td>
+                <td>{elem.date}</td>
+                <td>
+                  {admin ? (
+                    <button
+                      className='btn btn-danger'
+                      onClick={() => deleteEvent(elem.id)}>
+                      Delete
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
+                </td>
+                <td>
+                  {admin ? (
+                    <form
+                      className='form-inline'
+                      onSubmit={(e) => addManche(e, elem.id)}>
+                      <input
+                        className='form-control'
+                        id='event'
+                        type='text'
+                        placeholder='name of manche'
+                        required
+                        onChange={(e) => setMancheName(e.target.value)}
+                      />
+                      <input
+                        className='form-control'
+                        type='number'
+                        min={0}
+                        placeholder='ordre of manche'
+                        required
+                        onChange={(e) => setMancheOrdre(e.target.value)}
+                      />
+                      <button className='btn btn-primary'>Add manche</button>
+                    </form>
+                  ) : (
+                    <div></div>
+                  )}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <table className='table table-striped'>
+                    <thead className='thead'>
+                      <tr>
+                        <th scope='col'>manche</th>
+                        <th scope='col'>ordre</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </td>
-            </tr>
+                    </thead>
+                    <tbody>
+                      {apiResponseManche.data.map((elem, key) => (
+                        <tr key={key}>
+                          <td>{elem.name}</td>
+                          <td>{elem.ordre}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </>
           ))}
         </tbody>
       </table>
