@@ -183,8 +183,8 @@ function Events({ admin }) {
                   )}
                 </td>
               </tr>
-              <tr>
-                <td>
+              <tr className="text-center justify-content-center">
+                <td colSpan={4}>
                   <table className='table table-striped'>
                     <thead className='thead'>
                       <tr>
