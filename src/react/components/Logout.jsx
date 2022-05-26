@@ -20,9 +20,11 @@ function Logout({ setIsLogged, setIsAdmin }) {
     });
   }
   return (
-    <div>
-      <form onSubmit={(e) => logOut(e)}>
-        <button className='btn btn-lg btn-danger btn-block'>Log out</button>
+    <div className='container'>
+      <form onSubmit={(e) => logOut(e)} className='input-group justify-content-center p-2'>
+        <div >
+          <button className='btn btn-lg btn-danger btn-block' style={{width: '200px'}} >Log out</button>
+        </div>
       </form>
     </div>
   );
