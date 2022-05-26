@@ -184,7 +184,7 @@ function Events({ admin }) {
                 </td>
               </tr>
               <tr className="text-center justify-content-center">
-                <td colSpan={4}>
+                <td colSpan={4} style={{padding: 0}}>
                   <table className='table table-striped'>
                     <thead className='thead'>
                       <tr>
