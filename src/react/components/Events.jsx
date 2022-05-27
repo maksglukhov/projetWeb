@@ -145,7 +145,8 @@ function Events({ admin }) {
         </thead>
         <tbody>
           {apiResponse.data.map((elem, key) => (
-            <tr key={key}>
+            <>
+            <tr key={key} className="table-secondary">
               <td>{elem.id}</td>
               <td>{elem.name}</td>
               <td>{elem.date}</td>
@@ -187,14 +188,15 @@ function Events({ admin }) {
                   <div></div>
                 )}
               </td>
+              </tr>
               <tr>
-                <td>
+                <td colSpan={5}>
                   <Manche
                     eventId={elem.id}
                     refreshTabManche={refreshTabManche}></Manche>
                 </td>
               </tr>
-            </tr>
+            </>
           ))}
         </tbody>
       </table>

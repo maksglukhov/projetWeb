@@ -30,22 +30,28 @@ function Manche({ eventId, refreshTabManche }) {
   }, []);
 
   return (
-    <table className='table table-striped'>
-      <thead className='thead'>
-        <tr>
-          <th scope='col'>manche</th>
-          <th scope='col'>ordre</th>
-        </tr>
-      </thead>
-      <tbody>
-        {apiResponse.data.map((elem, key) => (
-          <tr key={key}>
-            <td>{elem.name}</td>
-            <td>{elem.ordre}</td>
+    <div className='custom-scroll m-auto' 
+      style={{
+        padding: 0,
+        overflowX: "hidden", 
+        height: "50vh"}}>
+      <table className='table table-striped' style={{ width: "100%", alignContent: "center", justifyContent: "center"}}>
+        <thead className='thead'>
+          <tr>
+            <th scope='col'>manche</th>
+            <th scope='col'>ordre</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {apiResponse.data.map((elem, key) => (
+            <tr key={key}>
+              <td>{elem.name}</td>
+              <td>{elem.ordre}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
