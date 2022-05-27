@@ -24,32 +24,35 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   const styleClassNameLi = "nav-item p-2";
   const styleClassNameLiRight = "nav-item p-2 navbar-right";
 
+  const linkStyle = {color: "white"};
+  const linkStyleActive = {color: "white", backgroundColor: "black"};
+
 
   console.log("is logged in", isLogged);
   //TODO fetch to get if logged and if admin
 
   return (
     <Router>
-      <div>
-        <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+      <div >
+        <nav className='navbar navbar-expand-lg navbar-dark bg-dark '>
           <div className='collapse navbar-collapse' id='navbarNav'>
             {isLogged ? (
               <>
-                <ul className='nav navbar-nav'>
-                  <li className={styleClassNameLi}>
-                    <Link to='/'>Home</Link>
+                <ul className='nav navbar-dark'>
+                  <li className={styleClassNameLi} >
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/' >Home</Link>
                   </li>
                   <li className={styleClassNameLi}>
-                    <Link to='/persons'>Persons</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/persons'>Persons</Link>
                   </li>
                   <li className={styleClassNameLi}>
-                    <Link to='/events'>Events</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/events'>Events</Link>
                   </li>
                 </ul>
 
                 <ul className='navbar-nav ml-auto flex-nowrap'>
                   <li className={styleClassNameLiRight}>
-                    <Link to='/logout'>Log out</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/logout'>Log out</Link>
                   </li>
                 </ul>
               </>
@@ -57,21 +60,21 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
               <>
                 <ul className='nav navbar-nav'>
                   <li className={styleClassNameLi}>
-                    <Link to='/'>Home</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/'>Home</Link>
                   </li>
                   <li className={styleClassNameLi}>
-                    <Link to='/persons'>Persons</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/persons'>Persons</Link>
                   </li>
                   <li className={styleClassNameLi}>
-                    <Link to='/events'>Events</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/events'>Events</Link>
                   </li>
                 </ul>
                 <ul className='navbar-nav ml-auto flex-nowrap'>
                   <li className={styleClassNameLiRight}>
-                    <Link to='/createuser'>Sign in</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/createuser'>Sign in</Link>
                   </li>
                   <li className={styleClassNameLiRight}>
-                    <Link to='/login'>Log in</Link>
+                    <Link style={linkStyle} underline="none" activeStyle={linkStyleActive} to='/login'>Log in</Link>
                   </li>
                 </ul>
               </>
