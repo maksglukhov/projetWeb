@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FaBeer } from "react-icons/fa";
+import Manche from "./Manche";
 
 function Events({ admin }) {
   const [event, setEvent] = useState("");
@@ -15,6 +17,7 @@ function Events({ admin }) {
 
   const [mancheName, setMancheName] = useState("");
   const [mancheOrdre, setMancheOrdre] = useState("");
+  const [refreshTabManche, setRefreshTabManche] = useState(false);
 
   function test() {
     console.log(event);
@@ -54,9 +57,10 @@ function Events({ admin }) {
         })
       );
   }
+  //TODO add component manche with id in props
 
   function addManche(e, id) {
-    e.preventDefault();
+    //e.preventDefault();
     //console.log(event);
     const requestOptions = {
       method: "POST",
@@ -67,7 +71,7 @@ function Events({ admin }) {
         mancheOrdre: mancheOrdre,
       }),
     };
-    fetch("api/events/manche", requestOptions)
+    fetch("api/events/addmanche", requestOptions)
       .then((res) => res.json())
       .then((data) => {
         setApiResponseManche({
@@ -76,7 +80,8 @@ function Events({ admin }) {
         });
         console.log(apiResponseManche);
       });
-    //console.log(id);
+    setRefreshTabManche(true);
+    console.log(id);
   }
 
   useEffect(() => {
@@ -131,6 +136,7 @@ function Events({ admin }) {
       <table className='table table-striped'>
         <thead className='thead-dark'>
           <tr>
+            <th scope='col'>ID</th>
             <th scope='col'>Event</th>
             <th scope='col'>Date</th>
             {admin ? <th scope='col'>Delete event</th> : <th scope='col'></th>}
@@ -140,6 +146,7 @@ function Events({ admin }) {
         <tbody>
           {apiResponse.data.map((elem, key) => (
             <tr key={key}>
+              <td>{elem.id}</td>
               <td>{elem.name}</td>
               <td>{elem.date}</td>
               <td>
@@ -147,7 +154,7 @@ function Events({ admin }) {
                   <button
                     className='btn btn-danger'
                     onClick={() => deleteEvent(elem.id)}>
-                    Delete
+                    <FaBeer />
                   </button>
                 ) : (
                   <div></div>
@@ -181,22 +188,9 @@ function Events({ admin }) {
                 )}
               </td>
               <td>
-                <table className='table table-striped'>
-                  <thead className='thead'>
-                    <tr>
-                      <th scope='col'>manche</th>
-                      <th scope='col'>ordre</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {apiResponseManche.data.map((elem, key) => (
-                      <tr key={key}>
-                        <td>{elem.name}</td>
-                        <td>{elem.ordre}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <Manche
+                  eventId={elem.id}
+                  refreshTabManche={refreshTabManche}></Manche>
               </td>
             </tr>
           ))}

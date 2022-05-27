@@ -8,6 +8,7 @@ const { checkAdmin, checkToken } = require("../check");
 router.get("/", async (req, res) => {
   if (req.cookies && req.cookies.token && req.cookies.token.tokenId) {
     let tokenId = req.cookies.token.tokenId;
+    console.log(req.cookies.token.tokenId);
     if (await checkToken(req, res)) {
       let isAdmin = await checkAdmin(tokenId);
       if (isAdmin) {

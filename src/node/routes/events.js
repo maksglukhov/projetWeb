@@ -44,7 +44,7 @@ router.delete("/", async (req, res) => {
   }
 });
 
-router.post("/manche", async (req, res) => {
+router.post("/addmanche", async (req, res) => {
   const eventId = req.body.eventId;
   console.log(eventId);
   const mancheName = req.body.mancheName;
@@ -56,12 +56,31 @@ router.post("/manche", async (req, res) => {
       [mancheId, mancheName, mancheOrdre, eventId]
     );
     if (addMacnhe) {
-      const allManche = await pgClient.query("SELECT * FROM manche");
+      const allManche = await pgClient.query(
+        "SELECT * FROM manche where planning_id = $1",
+        [eventId]
+      );
       if (allManche) {
         res.send(allManche.rows);
       }
     }
   } catch (error) {}
+});
+
+router.get("/manche/:id", async (req, res) => {
+  let eventId = req.params.id;
+  console.log("hereeeeeeeeee", eventId);
+  try {
+    const allManche = await pgClient.query(
+      "SELECT * FROM manche where planning_id = $1",
+      [eventId]
+    );
+    if (allManche) {
+      res.send(allManche.rows);
+    }
+  } catch (error) {
+    console.error(error.message);
+  }
 });
 
 module.exports = router;

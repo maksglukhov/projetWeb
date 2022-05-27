@@ -8,13 +8,7 @@ function Persons({ admin }) {
 
   useEffect(() => {
     fetch("api/persons")
-      .then((res) => {
-        if (res.status == 400) {
-          alert("You are not admin");
-        } else {
-          res.json();
-        }
-      })
+      .then((res) => res.json())
       .then((data) =>
         setApiResponse({
           data: data,
