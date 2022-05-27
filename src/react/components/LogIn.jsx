@@ -51,7 +51,7 @@ function Login({ setIsLogged, setIsAdmin }) {
 
   if (Cookies.get("token")) {
     //console.log(Cookies.get("token"));
-    return <div>There is cookie</div>;
+    return <div className="text-center">There is cookie</div>;
   }
 
   const styleClassNameInput = "form-control";

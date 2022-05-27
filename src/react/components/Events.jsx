@@ -187,11 +187,13 @@ function Events({ admin }) {
                   <div></div>
                 )}
               </td>
-              <td>
-                <Manche
-                  eventId={elem.id}
-                  refreshTabManche={refreshTabManche}></Manche>
-              </td>
+              <tr>
+                <td>
+                  <Manche
+                    eventId={elem.id}
+                    refreshTabManche={refreshTabManche}></Manche>
+                </td>
+              </tr>
             </tr>
           ))}
         </tbody>
