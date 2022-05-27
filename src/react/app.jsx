@@ -34,9 +34,12 @@ function Mymenu() {
           //refreshMenu();
           //navigate("/events");
         } else if (res.status === 200) {
+          console.log("enter in status 200");
           setIsLogged(true);
+
           //refreshMenu();
           setIsAdmin(false);
+          console.log("is admin", admin);
           //navigate("/events");
         } else {
           throw new Error("error");

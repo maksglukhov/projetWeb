@@ -2,10 +2,11 @@ var express = require("express");
 var router = express.Router();
 const { v4 } = require("uuid");
 const pgClient = require("../db");
-const { checkToken, checkAdmin } = require("../check.js");
+const { checkToken, checkAdmin, updateUserStatus } = require("../check.js");
 
-router.post("/", async (req, res) => {
-  let userId = req.body.id;
+router.delete("/logoutuser/:id", async (req, res) => {
+  let userId = req.params.id;
+  //console.log("userId", userId);
   if (req.cookies && req.cookies.token && req.cookies.token.tokenId) {
     let tokenId = req.cookies.token.tokenId;
     if (await checkToken(req, res)) {
@@ -17,6 +18,7 @@ router.post("/", async (req, res) => {
             [userId]
           );
           if (delToken) {
+            let updateUser = await updateUserStatus(userId, false);
             res.sendStatus(200);
           }
         } catch (error) {

@@ -3,7 +3,7 @@ const { get } = require("express/lib/response");
 var router = express.Router();
 const { v4 } = require("uuid");
 const pgClient = require("../db");
-const { checkAdmin, checkToken } = require("../check");
+const { checkAdmin, checkToken, updateUserStatus } = require("../check");
 
 router.post("/createuser", async (req, res) => {
   try {
@@ -16,12 +16,12 @@ router.post("/createuser", async (req, res) => {
     const username = req.body.username;
     let id = v4();
     const newPerson = await pgClient.query(
-      "INSERT INTO person (id, first_name, last_name, password, username) VALUES($1, $2, $3, $4, $5)",
-      [id, firstName, lastName, password, username]
+      "INSERT INTO person (id, first_name, last_name, password, username, online, is_admin) VALUES($1, $2, $3, $4, $5, $6, $7)",
+      [id, firstName, lastName, password, username, true, false]
     );
-    let token = await createToken(id);
-    //console.log("token in then", token);
-    res.cookie("token", token.tokenId);
+    // let token = await createToken(id);
+    // //console.log("token in then", token);
+    // res.cookie("token", token.tokenId);
     res.sendStatus(200);
     //console.log("token", token);
     //res.cookie("token", token);
@@ -48,16 +48,18 @@ router.post("/login", async (req, res) => {
       );
 
       if (newPerson.rows.length === 1) {
-        console.log("user id", newPerson.rows[0].id);
+        //console.log("user id", newPerson.rows[0].id);
         console.log("connection: user exists");
         let token = await createToken(newPerson.rows[0].id);
         console.log("connection line: cookie", token);
         res.cookie("token", token);
+
         //console.log("******************", req.cookies.token.tokenId);
         //console.log("undefined");
+        let setStatus = await updateUserStatus(newPerson.rows[0].id, true);
         let isAdmin = await checkAdmin(token.tokenId);
         if (isAdmin) {
-          console.log("here");
+          //console.log("here");
           console.log("admin", isAdmin);
           res.sendStatus(202);
         } else {
@@ -84,12 +86,19 @@ router.get("/logout", async (req, res) => {
         //console.log(tokenId);
         //res.clearCookie('token');
         //console.log(req.cookies.token.tokenId);
+        const getUserId = await pgClient.query(
+          "SELECT user_id FROM token where token = $1",
+          [tokenId]
+        );
+        let userId = getUserId.rows[0].user_id;
         const delToken = await pgClient.query(
           "DELETE FROM token WHERE token = $1",
           [tokenId]
         );
+
         if (delToken) {
           res.clearCookie("token");
+          let setStatus = await updateUserStatus(userId, false);
           console.log("User has disconnected from server");
           res.sendStatus(200);
         } else {
@@ -114,6 +123,7 @@ async function createToken(userId) {
       "INSERT INTO token(token, user_id, expired_date) VALUES ($1, $2, $3)",
       [tokenId, userId, lifetimeToken]
     );
+
     let token = { tokenId: tokenId };
     //console.log("71", token);
     return token;

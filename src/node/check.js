@@ -37,8 +37,8 @@ async function existsToken(tokenId, res) {
     let token = await pgClient.query("SELECT * FROM token WHERE token = $1", [
       tokenId,
     ]);
-    if (token) {
-      if (checkTime(token)) {
+    if (token.rows.length > 0) {
+      if (await checkTime(token)) {
         return true;
       } else {
         try {
@@ -53,6 +53,8 @@ async function existsToken(tokenId, res) {
         }
       }
     } else {
+      console.log("token not found");
+      res.clearCookie("token");
       return false;
     }
   } catch (error) {
@@ -61,14 +63,30 @@ async function existsToken(tokenId, res) {
   }
 }
 
-function checkTime(token) {
+async function checkTime(token) {
   let currentTime = Date.now() / 1000;
   //console.log(currentTime);
   let tokenTime = token.rows[0].expired_date;
   //console.log(token.rows[0].expired_date);
   if (currentTime < tokenTime) {
+    tokenTime += 900;
+    const updateTime = await pgClient.query(
+      "UPDATE token SET expired_date = $1 WHERE token = $2",
+      [tokenTime, token.rows[0].token]
+    );
     return true;
   } else return false;
 }
 
-module.exports = { checkToken, checkAdmin };
+async function updateUserStatus(userId, online) {
+  try {
+    const updateStatus = await pgClient.query(
+      "UPDATE person SET online = $1 WHERE id = $2",
+      [online, userId]
+    );
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports = { checkToken, checkAdmin, updateUserStatus };

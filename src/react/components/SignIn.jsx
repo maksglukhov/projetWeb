@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-function Signin({ setIsLogged }) {
+function Signin({ setIsLogged, setIsAdmin }) {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -29,20 +29,23 @@ function Signin({ setIsLogged }) {
       .then((res) => {
         //console.log("log de res", res);
         if (res.status !== 200) {
+          console.log("here is problem");
           throw new Error("error");
         }
         setIsLogged(false);
-        navigate("/events");
+        setIsAdmin(false);
+        navigate("/login");
       })
       .catch((e) => {
         console.log("log", e);
         alert("username already exists");
+        navigate("/signin");
       });
   }
 
   if (Cookies.get("token")) {
     //console.log(Cookies.get("token"));
-    return <div className="text-center">There is cookie</div>;
+    return <div className='text-center'>There is cookie</div>;
   }
 
   const styleClassNameInput = "form-control";
