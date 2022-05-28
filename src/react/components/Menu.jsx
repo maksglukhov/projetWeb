@@ -14,6 +14,7 @@ import SignIn from "./SignIn";
 import LogIn from "./LogIn";
 import Cookies from "js-cookie";
 import Logout from "./Logout";
+import Inscriptions from "./Inscriptions";
 
 //verif new user
 //change menu
@@ -34,7 +35,9 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   return (
     <Router>
       <div>
-        <nav className='navbar navbar-expand-lg navbar-dark' style={{ backgroundColor: "#C80032"}}>
+        <nav
+          className='navbar navbar-expand-lg navbar-dark'
+          style={{ backgroundColor: "#C80032" }}>
           <div className='collapse navbar-collapse' id='navbarNav'>
             {isLogged ? (
               <>
@@ -59,7 +62,13 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                       </Link>
                     </li>
                   ) : (
-                    <></>
+                    <Link
+                      style={linkStyle}
+                      underline='none'
+                      activeStyle={linkStyleActive}
+                      to='/inscriptions'>
+                      My inscriptions
+                    </Link>
                   )}
                   <li className={styleClassNameLi}>
                     <Link
@@ -131,13 +140,34 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
         </nav>
 
         <Routes>
-          <Route path='/' element={<Home admin={admin}></Home>}></Route>
+          <Route
+            path='/'
+            element={
+              <Home
+                admin={admin}
+                setIsLogged={setIsLogged}
+                setIsAdmin={setIsAdmin}></Home>
+            }></Route>
           <Route
             path='/persons'
-            element={<Persons admin={admin}></Persons>}></Route>
+            element={
+              <Persons
+                admin={admin}
+                setIsLogged={setIsLogged}
+                setIsAdmin={setIsAdmin}></Persons>
+            }></Route>
           <Route
             path='/events'
-            element={<Events admin={admin}></Events>}></Route>
+            element={
+              <Events
+                admin={admin}
+                isLogged={isLogged}
+                setIsLogged={setIsLogged}
+                setIsAdmin={setIsAdmin}></Events>
+            }></Route>
+          <Route
+            path='/inscriptions'
+            element={<Inscriptions isLogged={isLogged}></Inscriptions>}></Route>
           <Route
             path='/createuser'
             element={

@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { v4 } = require("uuid");
 const pgClient = require("../db");
-const { checkToken, checkAdmin } = require("../check.js");
+const { checkToken, checkAdmin, getUserId } = require("../check.js");
 
 router.post("/", async (req, res) => {
   //console.log(req.body.event);
@@ -22,18 +22,12 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  if (await checkToken(req, res)) {
-    let tokenId = req.cookies.token.tokenId;
-    let isAdmin = await checkAdmin(tokenId);
-    if (isAdmin) {
-      try {
-        const allEvents = await pgClient.query("SELECT * FROM planning");
-        //console.log(allEvents.rows);
-        res.send(allEvents.rows);
-      } catch (error) {
-        console.error(error.message);
-      }
-    }
+  try {
+    const allEvents = await pgClient.query("SELECT * FROM planning");
+    //console.log(allEvents.rows);
+    res.send(allEvents.rows);
+  } catch (error) {
+    console.error(error.message);
   }
 });
 
@@ -57,48 +51,38 @@ router.delete("/", async (req, res) => {
   }
 });
 
-router.post("/addmanche", async (req, res) => {
+router.get("/inscriptions", async (req, res) => {
   if (await checkToken(req, res)) {
     let tokenId = req.cookies.token.tokenId;
-    let isAdmin = await checkAdmin(tokenId);
-    if (isAdmin) {
-      const eventId = req.body.eventId;
-      //console.log(eventId);
-      const mancheName = req.body.mancheName;
-      const mancheOrdre = req.body.mancheOrdre;
-      const mancheId = v4();
-      try {
-        const addMacnhe = await pgClient.query(
-          "INSERT INTO manche(id, name, ordre, planning_id) VALUES ($1, $2, $3, $4)",
-          [mancheId, mancheName, mancheOrdre, eventId]
-        );
-        if (addMacnhe) {
-          const allManche = await pgClient.query(
-            "SELECT * FROM manche where planning_id = $1",
-            [eventId]
-          );
-          if (allManche) {
-            res.send(allManche.rows);
-          }
-        }
-      } catch (error) {
-        console.error(error.message);
-        res.send(error.message);
+    let userId = await getUserId(tokenId);
+    try {
+      const allInscriptions = await pgClient.query(
+        "SELECT planning.name AS eventName, manche.name as mancheName, manche.ordre, planning.date FROM planning, manche, inscription WHERE planning.id = inscription.planning_id AND manche.planning_id = inscription.planning_id AND manche.id = inscription.manche_id AND user_id = $1",
+        [userId]
+      );
+      //console.log(allInscriptions.rows);
+      if (allInscriptions) {
+        res.send(allInscriptions.rows);
       }
+    } catch (error) {
+      console.error(error.message);
     }
+  } else {
+    res.sendStatus(401);
   }
 });
 
-router.get("/manche/:id", async (req, res) => {
-  let eventId = req.params.id;
-  //console.log("hereeeeeeeeee", eventId);
+router.get("/inscriptionstest", async (req, res) => {
+  console.log("we are here");
+  let userId = req.query.id;
   try {
-    const allManche = await pgClient.query(
-      "SELECT * FROM manche where planning_id = $1",
-      [eventId]
+    const allInscriptions = await pgClient.query(
+      "SELECT planning.name, manche.name, manche.ordre, planning.date FROM planning, manche, inscription WHERE planning.id = inscription.planning_id AND manche.planning_id = inscription.planning_id AND manche.id = inscription.manche_id AND user_id = $1",
+      [userId]
     );
-    if (allManche) {
-      res.send(allManche.rows);
+    console.log(allInscriptions.rows);
+    if (allInscriptions) {
+      res.send(allInscriptions.rows);
     }
   } catch (error) {
     console.error(error.message);

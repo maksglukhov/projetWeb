@@ -27,4 +27,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/forselect", async (req, res) => {
+  try {
+    const getPersons = await pgClient.query(
+      "SELECT id as value, username as label FROM person WHERE is_admin = false"
+    );
+    res.send(getPersons.rows);
+  } catch (error) {
+    console.log(error.message);
+    res.sendStatus(401);
+  }
+});
+
 module.exports = router;

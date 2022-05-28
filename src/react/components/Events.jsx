@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import Manche from "./Manche";
 
-function Events({ admin }) {
+function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
   const [event, setEvent] = useState("");
   const [apiResponse, setApiResponse] = useState({
     data: [],
@@ -71,7 +71,7 @@ function Events({ admin }) {
         mancheOrdre: mancheOrdre,
       }),
     };
-    fetch("api/events/addmanche", requestOptions)
+    fetch("api/manche/addmanche", requestOptions)
       .then((res) => res.json())
       .then((data) => {
         setApiResponseManche({
@@ -146,54 +146,55 @@ function Events({ admin }) {
         <tbody>
           {apiResponse.data.map((elem, key) => (
             <>
-            <tr key={key} style={{backgroundColor: "#EAB0D0"}}>
-              <td>{elem.id}</td>
-              <td>{elem.name}</td>
-              <td>{elem.date}</td>
-              <td>
-                {admin ? (
-                  <button
-                    className='btn btn-danger'
-                    onClick={() => deleteEvent(elem.id)}>
-                    <FaTrash />
-                  </button>
-                ) : (
-                  <div></div>
-                )}
-              </td>
-              <td>
-                {admin ? (
-                  <form
-                    className='form-inline'
-                    onSubmit={(e) => addManche(e, elem.id)}>
-                    <input
-                      className='form-control'
-                      id='event'
-                      type='text'
-                      placeholder='name of manche'
-                      required
-                      onChange={(e) => setMancheName(e.target.value)}
-                    />
-                    <input
-                      className='form-control'
-                      type='number'
-                      min={0}
-                      placeholder='ordre of manche'
-                      required
-                      onChange={(e) => setMancheOrdre(e.target.value)}
-                    />
-                    <button className='btn btn-primary'>Add manche</button>
-                  </form>
-                ) : (
-                  <div></div>
-                )}
-              </td>
+              <tr key={key} style={{ backgroundColor: "#EAB0D0" }}>
+                <td>{elem.id}</td>
+                <td>{elem.name}</td>
+                <td>{elem.date}</td>
+                <td>
+                  {admin ? (
+                    <button
+                      className='btn btn-danger'
+                      onClick={() => deleteEvent(elem.id)}>
+                      <FaTrash />
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
+                </td>
+                <td>
+                  {admin ? (
+                    <form
+                      className='form-inline'
+                      onSubmit={(e) => addManche(e, elem.id)}>
+                      <input
+                        className='form-control'
+                        id='event'
+                        type='text'
+                        placeholder='name of manche'
+                        required
+                        onChange={(e) => setMancheName(e.target.value)}
+                      />
+                      <input
+                        className='form-control'
+                        type='number'
+                        min={0}
+                        placeholder='ordre of manche'
+                        required
+                        onChange={(e) => setMancheOrdre(e.target.value)}
+                      />
+                      <button className='btn btn-primary'>Add manche</button>
+                    </form>
+                  ) : (
+                    <div></div>
+                  )}
+                </td>
               </tr>
               <tr>
                 <td colSpan={5}>
                   <Manche
                     eventId={elem.id}
-                    refreshTabManche={refreshTabManche}></Manche>
+                    isLogged={isLogged}
+                    admin={admin}></Manche>
                 </td>
               </tr>
             </>

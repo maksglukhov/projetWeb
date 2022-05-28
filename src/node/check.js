@@ -53,6 +53,10 @@ async function existsToken(tokenId, res) {
         }
       }
     } else {
+      const deleteToken = await pgClient.query(
+        "DELETE FROM token WHERE token =$1",
+        [tokenId]
+      );
       console.log("token not found");
       res.clearCookie("token");
       return false;
@@ -74,6 +78,9 @@ async function checkTime(token) {
       "UPDATE token SET expired_date = $1 WHERE token = $2",
       [tokenTime, token.rows[0].token]
     );
+    if (updateTime) {
+      console.log("added 15 min lifetime token");
+    }
     return true;
   } else return false;
 }
@@ -89,4 +96,20 @@ async function updateUserStatus(userId, online) {
   }
 }
 
-module.exports = { checkToken, checkAdmin, updateUserStatus };
+async function getUserId(tokenId) {
+  try {
+    const getUserId = await pgClient.query(
+      "SELECT user_id FROM token WHERE token = $1",
+      [tokenId]
+    );
+    if (getUserId.rows.length === 1) {
+      return getUserId.rows[0].user_id;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+module.exports = { checkToken, checkAdmin, updateUserStatus, getUserId };

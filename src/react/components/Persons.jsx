@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Persons({ admin }) {
+function Persons({ admin, setIsLogged, setIsAdmin }) {
   const [update, setUpdate] = useState(false);
   const navigate = useNavigate();
   const [apiResponse, setApiResponse] = useState({
@@ -52,7 +52,7 @@ function Persons({ admin }) {
     <div>
       {admin ? (
         <div className='container'>
-          <ul className='card' style={{padding: 0}}>
+          <ul className='card' style={{ padding: 0 }}>
             <table className='table table-striped'>
               <thead className='thead-dark'>
                 <tr>

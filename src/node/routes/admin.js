@@ -35,4 +35,36 @@ router.delete("/logoutuser/:id", async (req, res) => {
   }
 });
 
+router.post("/inscriptuser", async (req, res) => {
+  if (req.cookies && req.cookies.token && req.cookies.token.tokenId) {
+    let tokenId = req.cookies.token.tokenId;
+    if (await checkToken(req, res)) {
+      let isAdmin = await checkAdmin(tokenId);
+      if (isAdmin) {
+        //console.log("entering inscriptuser");
+        let eventId = req.body.eventId;
+        let mancheId = req.body.mancheId;
+        let userId = req.body.userId;
+        //console.log("here userID*******", userId);
+        try {
+          const addInscription = await pgClient.query(
+            "INSERT INTO inscription(planning_id, manche_id, user_id) VALUES ($1, $2, $3)",
+            [eventId, mancheId, userId]
+          );
+          if (addInscription) {
+            res.sendStatus(200);
+          } else {
+            res.sendStatus(500);
+          }
+        } catch (error) {
+          res.sendStatus(501);
+          console.error(error.message);
+        }
+      }
+    } else {
+      res.send(401);
+    }
+  }
+});
+
 module.exports = router;
