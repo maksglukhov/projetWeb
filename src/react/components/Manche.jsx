@@ -36,7 +36,7 @@ function Manche({ eventId, refreshTabManche }) {
         overflowX: "hidden", 
         height: "50vh"}}>
       <table className='table table-striped' style={{ width: "100%", alignContent: "center", justifyContent: "center"}}>
-        <thead className='thead'>
+        <thead className='thead' style={{ backgroundColor: "#601E80", color: "white"}}>
           <tr>
             <th scope='col'>manche</th>
             <th scope='col'>ordre</th>

@@ -24,8 +24,8 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   const styleClassNameLi = "nav-item p-2";
   const styleClassNameLiRight = "nav-item p-2 navbar-right";
 
-  const linkStyle = { color: "white" };
-  const linkStyleActive = { color: "white", backgroundColor: "black" };
+  const linkStyle = { color: "black", fontWeight: "bold" };
+  const linkStyleActive = { color: "blue", backgroundColor: "black" };
 
   console.log("is logged in", isLogged);
   console.log("is admin in Menu", admin);
@@ -34,7 +34,7 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   return (
     <Router>
       <div>
-        <nav className='navbar navbar-expand-lg navbar-dark bg-dark '>
+        <nav className='navbar navbar-expand-lg navbar-dark' style={{ backgroundColor: "#C80032"}}>
           <div className='collapse navbar-collapse' id='navbarNav'>
             {isLogged ? (
               <>

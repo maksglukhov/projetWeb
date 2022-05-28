@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaBeer } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import Manche from "./Manche";
 
 function Events({ admin }) {
@@ -146,7 +146,7 @@ function Events({ admin }) {
         <tbody>
           {apiResponse.data.map((elem, key) => (
             <>
-            <tr key={key} className="table-secondary">
+            <tr key={key} style={{backgroundColor: "#EAB0D0"}}>
               <td>{elem.id}</td>
               <td>{elem.name}</td>
               <td>{elem.date}</td>
@@ -155,7 +155,7 @@ function Events({ admin }) {
                   <button
                     className='btn btn-danger'
                     onClick={() => deleteEvent(elem.id)}>
-                    <FaBeer />
+                    <FaTrash />
                   </button>
                 ) : (
                   <div></div>

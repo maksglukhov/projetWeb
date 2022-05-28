@@ -52,7 +52,7 @@ function Persons({ admin }) {
     <div>
       {admin ? (
         <div className='container'>
-          <ul className='card'>
+          <ul className='card' style={{padding: 0}}>
             <table className='table table-striped'>
               <thead className='thead-dark'>
                 <tr>
