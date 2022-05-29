@@ -42,19 +42,13 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
               <>
                 <ul className='nav navbar-dark'>
                   <li className={styleClassNameLi}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/'>
+                    <Link style={linkStyle} underline='none' to='/'>
                       Home
                     </Link>
                   </li>
                   {admin ? (
                     <li className={styleClassNameLi}>
-                      <Link
-                        style={linkStyle}
-                        underline='none'
-                        to='/persons'>
+                      <Link style={linkStyle} underline='none' to='/persons'>
                         Persons
                       </Link>
                     </li>
@@ -69,20 +63,14 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     </li>
                   )}
                   <li className={styleClassNameLi}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/events'>
+                    <Link style={linkStyle} underline='none' to='/events'>
                       Events
                     </Link>
                   </li>
                 </ul>
                 <ul className='navbar-nav ml-auto flex-nowrap'>
                   <li className={styleClassNameLiRight}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/logout'>
+                    <Link style={linkStyle} underline='none' to='/logout'>
                       Log out
                     </Link>
                   </li>
@@ -92,36 +80,24 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
               <>
                 <ul className='nav navbar-nav'>
                   <li className={styleClassNameLi}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/'>
+                    <Link style={linkStyle} underline='none' to='/'>
                       Home
                     </Link>
                   </li>
                   <li className={styleClassNameLi}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/events'>
+                    <Link style={linkStyle} underline='none' to='/events'>
                       Events
                     </Link>
                   </li>
                 </ul>
                 <ul className='navbar-nav ml-auto flex-nowrap'>
                   <li className={styleClassNameLiRight}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/createuser'>
+                    <Link style={linkStyle} underline='none' to='/createuser'>
                       Sign in
                     </Link>
                   </li>
                   <li className={styleClassNameLiRight}>
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      to='/login'>
+                    <Link style={linkStyle} underline='none' to='/login'>
                       Log in
                     </Link>
                   </li>
@@ -138,7 +114,8 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
               <Home
                 admin={admin}
                 setIsLogged={setIsLogged}
-                setIsAdmin={setIsAdmin}></Home>
+                setIsAdmin={setIsAdmin}
+                isLogged={isLogged}></Home>
             }></Route>
           <Route
             path='/persons'

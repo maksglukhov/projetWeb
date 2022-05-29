@@ -36,12 +36,12 @@ function Login({ setIsLogged, setIsAdmin }) {
         setIsAdmin(true);
         setIsLogged(true);
         //refreshMenu();
-        navigate("/events");
+        navigate("/");
       } else if (res.status === 200) {
         //refreshMenu();
         setIsAdmin(false);
         setIsLogged(true);
-        navigate("/events");
+        navigate("/");
       } else {
         //throw new Error("error");
         alert("Wrong username or password");
@@ -51,7 +51,7 @@ function Login({ setIsLogged, setIsAdmin }) {
 
   if (Cookies.get("token")) {
     //console.log(Cookies.get("token"));
-    return <div className="text-center">There is cookie</div>;
+    return <div className='text-center'>There is cookie</div>;
   }
 
   const styleClassNameInput = "form-control";

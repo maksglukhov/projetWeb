@@ -57,6 +57,8 @@ async function existsToken(tokenId, res) {
         "DELETE FROM token WHERE token =$1",
         [tokenId]
       );
+      let userId = await getUserId(tokenId);
+      let update = await updateUserStatus(userId, false);
       console.log("token not found");
       res.clearCookie("token");
       return false;
