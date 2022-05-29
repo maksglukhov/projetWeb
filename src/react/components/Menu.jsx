@@ -26,7 +26,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
   const styleClassNameLiRight = "nav-item p-2 navbar-right";
 
   const linkStyle = { color: "black", fontWeight: "bold" };
-  const linkStyleActive = { color: "blue", backgroundColor: "black" };
 
   console.log("is logged in", isLogged);
   console.log("is admin in Menu", admin);
@@ -46,7 +45,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/'>
                       Home
                     </Link>
@@ -56,25 +54,24 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                       <Link
                         style={linkStyle}
                         underline='none'
-                        activeStyle={linkStyleActive}
                         to='/persons'>
                         Persons
                       </Link>
                     </li>
                   ) : (
-                    <Link
-                      style={linkStyle}
-                      underline='none'
-                      activeStyle={linkStyleActive}
-                      to='/inscriptions'>
-                      My inscriptions
-                    </Link>
+                    <li className={styleClassNameLi}>
+                      <Link
+                        style={linkStyle}
+                        underline='none'
+                        to='/inscriptions'>
+                        My inscriptions
+                      </Link>
+                    </li>
                   )}
                   <li className={styleClassNameLi}>
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/events'>
                       Events
                     </Link>
@@ -85,7 +82,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/logout'>
                       Log out
                     </Link>
@@ -99,7 +95,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/'>
                       Home
                     </Link>
@@ -108,7 +103,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/events'>
                       Events
                     </Link>
@@ -119,7 +113,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/createuser'>
                       Sign in
                     </Link>
@@ -128,7 +121,6 @@ function Menu({ admin, setIsAdmin, setIsLogged, isLogged }) {
                     <Link
                       style={linkStyle}
                       underline='none'
-                      activeStyle={linkStyleActive}
                       to='/login'>
                       Log in
                     </Link>

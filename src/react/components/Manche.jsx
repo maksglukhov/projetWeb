@@ -79,7 +79,7 @@ function Manche({ eventId, isLogged, admin }) {
       style={{
         padding: 0,
         overflowX: "hidden",
-        height: "50vh",
+        maxHeight: "50vh",
       }}>
       <table
         className='table table-striped'
@@ -100,13 +100,13 @@ function Manche({ eventId, isLogged, admin }) {
         <tbody>
           {apiResponse.data.map((elem, key) => (
             <tr key={key}>
-              <td>{elem.name}</td>
-              <td>{elem.ordre}</td>
-              <td>
+              <td style={{width: "auto"}}>{elem.name}</td>
+              <td style={{width: "auto"}}>{elem.ordre}</td>
+              <td style={{width: "max-content"}}>
                 {isLogged ? (
                   <>
                     {admin ? (
-                      <div>
+                      <div style={{ display: "flex", width: "max-content"}}>
                         <MySelect
                           service={"api/persons/forselect"}
                           updateObjet={updateRes}

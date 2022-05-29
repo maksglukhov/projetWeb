@@ -143,10 +143,10 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
             {admin ? <th scope='col'>Add manche</th> : <th scope='col'></th>}
           </tr>
         </thead>
-        <tbody>
+        <>
           {apiResponse.data.map((elem, key) => (
-            <>
-              <tr key={key} style={{ backgroundColor: "#EAB0D0" }}>
+            <tbody key={key}>
+              <tr style={{ backgroundColor: "#EAB0D0" }}>
                 <td>{elem.id}</td>
                 <td>{elem.name}</td>
                 <td>{elem.date}</td>
@@ -197,9 +197,9 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
                     admin={admin}></Manche>
                 </td>
               </tr>
-            </>
+            </tbody>
           ))}
-        </tbody>
+        </>
       </table>
     </div>
   );
