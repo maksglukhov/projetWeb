@@ -29,7 +29,7 @@ function Home({ admin, setIsLogged, setIsAdmin, isLogged }) {
   }, []);
   console.log("is admin", admin);
 
-  const name = <p>Site créer par : Glukhov Maks, Devémy Thibaud et Axel Thebault</p>;
+  const name = <p>Site créé par : Glukhov Maks, Devémy Thibaud et Axel Thebault</p>;
 
 
 
