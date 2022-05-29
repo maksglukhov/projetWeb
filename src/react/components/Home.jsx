@@ -29,7 +29,7 @@ function Home({ admin, setIsLogged, setIsAdmin, isLogged }) {
   }, []);
   console.log("is admin", admin);
 
-  const name = <p>Site créer par : --Vos nom-- --Vos nom-- Axel Thebault</p>;
+  const name = <p>Site créer par : Glukhov Maks, Devémy Thibaud et Axel Thebault</p>;
 
 
 
@@ -51,7 +51,7 @@ function Home({ admin, setIsLogged, setIsAdmin, isLogged }) {
           <p>- Vous pouvez inscrire un autre user à une manche d'évènement</p>
           <p>- Vous pouvez vous déconnecter</p>
         </div>
-        <div>
+        <div style={{position: "absolute", bottom: "0", textAlign: "center", width: "100%",  background: "black", color: "white", fontWeight: "bold"}}>
           {name}
         </div>
       </>
@@ -80,7 +80,7 @@ function Home({ admin, setIsLogged, setIsAdmin, isLogged }) {
             </div>
           )}
         </div>
-        <div>
+        <div style={{position: "absolute", bottom: "0", textAlign: "center", width: "100%", background: "black", color: "white", fontWeight: "bold"}}>
           {name}
         </div>
       </>
