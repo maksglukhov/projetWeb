@@ -28,62 +28,62 @@ function Home({ admin, setIsLogged, setIsAdmin, isLogged }) {
       });
   }, []);
   console.log("is admin", admin);
+
+  const name = <p>Site créer par : --Vos nom-- --Vos nom-- Axel Thebault</p>;
+
+
+
   if (admin) {
     return (
-      <div className='text-center'>
-        <br />
-        <h4>En tant qu'admin, vous pouvez :</h4>
-        <br />
-        <d>
-          - Voir la listes des personnes avec leur statut, et si elles sont
-          connectées, vous pouvez les déconnecter.
-        </d>
-        <br />
-        <br />
-        <d>
-          - Ajouter des évènements et des manches d'évènements, et vous pouvez
-          supprimer un évènement et une manche
-        </d>
-        <br />
-        <br />
-        <d>- Vous pouvez inscrire un autre user à une manche d'évènement</d>
-        <br />
-        <br />
-        <d>- Vous pouvez vous déconnecter</d>
-      </div>
+      <>
+        <div className='text-center'>
+          <br />
+          <h4>En tant qu'admin, vous pouvez :</h4>
+          <br />
+          <p>
+            - Voir la listes des personnes avec leur statut, et si elles sont
+            connectées, vous pouvez les déconnecter.
+          </p>
+          <p>
+            - Ajouter des évènements et des manches d'évènements, et vous pouvez
+            supprimer un évènement et une manche
+          </p>
+          <p>- Vous pouvez inscrire un autre user à une manche d'évènement</p>
+          <p>- Vous pouvez vous déconnecter</p>
+        </div>
+        <div>
+          {name}
+        </div>
+      </>
     );
   } else {
     return (
-      <div className='text-center'>
-        {isLogged ? (
-          <div className='text-center'>
-            <br />
-            <h4>En tant qu'utilisateur connecté, vous pouvez :</h4>
-            <br />
-            <d>- Vous inscrire à des manches d'évènements</d>
-            <br />
-            <br />
-            <d>- Vous pouvez voir vos inscriptions</d>
-            <br />
-            <br />
-            <d>- Vous pouvez vous déconnecter</d>
-          </div>
-        ) : (
-          <div className='text-center'>
-            <br />
-            <h4>En tant qu'utilisateur non-connecté, vous pouvez : </h4>
-            <br />
-            <d>- Créer un compte user</d>
-            <br />
-            <br />
-            <d>- Vous connecter</d>
-            <br />
-            <br />
-            <d>- Consulter les évènements</d>
-            <br />
-          </div>
-        )}
-      </div>
+      <>
+        <div className='text-center'>
+          {isLogged ? (
+            <div className='text-center'>
+              <br />
+              <h4>En tant qu'utilisateur connecté, vous pouvez :</h4>
+              <br />
+              <p>- Vous inscrire à des manches d'évènements</p>
+              <p>- Vous pouvez voir vos inscriptions</p>
+              <p>- Vous pouvez vous déconnecter</p>
+            </div>
+          ) : (
+            <div className='text-center'>
+              <br />
+              <h4>En tant qu'utilisateur non-connecté, vous pouvez : </h4>
+              <br />
+              <p>- Créer un compte user</p>
+              <p>- Vous connecter</p>
+              <p>- Consulter les évènements</p>
+            </div>
+          )}
+        </div>
+        <div>
+          {name}
+        </div>
+      </>
     );
   }
 }
