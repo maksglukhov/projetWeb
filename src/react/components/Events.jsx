@@ -76,27 +76,29 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
       {admin ? (
         <div className='input-group mb-3 justify-content-center'>
           <div className='input-group-prepend'>
-            <form className='form-inline' onSubmit={(e) => sendEvent(e)}>
+            <form className='form-inline' onSubmit={(e) => sendEvent(e)} style={{display: "flow-root"}}>
               <h2>Enter the following information to add the event</h2>
-              <div className='p-2'>
-                <input
-                  className='form-control'
-                  id='event'
-                  type='text'
-                  required
-                  onChange={(e) => setEvent(e.target.value)}
-                />
-              </div>
-              <div className='p-2'>
-                <input
-                  className='form-control'
-                  type='date'
-                  required
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </div>
-              <div className='p-2'>
-                <button className='btn btn-primary'>Add event</button>
+              <div style={{display: "flex"}} className="justify-content-center">
+                <div className='p-2'>
+                  <input
+                    className='form-control'
+                    id='event'
+                    type='text'
+                    required
+                    onChange={(e) => setEvent(e.target.value)}
+                  />
+                </div>
+                <div className='p-2'>
+                  <input
+                    className='form-control'
+                    type='date'
+                    required
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </div>
+                <div className='p-2'>
+                  <button className='btn btn-primary'>Add event</button>
+                </div>
               </div>
             </form>
           </div>

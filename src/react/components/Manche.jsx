@@ -121,32 +121,40 @@ function Manche({ eventId, isLogged, admin }) {
 
   return (
     <div
-      className='custom-scroll m-auto'
+      className="custom-scroll m-auto justify-content-center"
       style={{
         padding: 0,
         overflowX: "hidden",
         maxHeight: "50vh",
       }}>
       {admin ? (
-        <form className='form-inline' onSubmit={(e) => addManche(e, eventId)}>
-          <h2>Enter the following information to add the macnhe</h2>
-          <input
-            className='form-control'
-            id='event'
-            type='text'
-            placeholder='name of manche'
-            required
-            onChange={(e) => setMancheName(e.target.value)}
-          />
-          <input
-            className='form-control'
-            type='number'
-            min={0}
-            placeholder='ordre of manche'
-            required
-            onChange={(e) => setMancheOrdre(e.target.value)}
-          />
-          <button className='btn btn-primary'>Add manche</button>
+        <form className='form-inline justify-content-center' onSubmit={(e) => addManche(e, eventId)}>
+          <h2>Enter the following information to add the manche</h2>
+          <div style={{display: "flex"}} className="justify-content-center">
+            <div className="p-2">
+              <input
+                className='form-control'
+                id='event'
+                type='text'
+                placeholder='name of manche'
+                required
+                onChange={(e) => setMancheName(e.target.value)}
+              />
+            </div>
+            <div className="p-2">
+              <input
+                className='form-control'
+                type='number'
+                min={0}
+                placeholder='ordre of manche'
+                required
+                onChange={(e) => setMancheOrdre(e.target.value)}
+              />
+            </div>
+            <div className="p-2">
+              <button className='btn btn-primary'>Add manche</button>
+            </div>
+          </div>
         </form>
       ) : (
         <div></div>
