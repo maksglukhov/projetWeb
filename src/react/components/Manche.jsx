@@ -180,9 +180,8 @@ function Manche({ eventId, isLogged, admin }) {
             <tr key={key}>
               <td style={{ width: "auto" }}>{elem.name}</td>
               <td style={{ width: "auto" }}>{elem.ordre}</td>
-              <td style={{ width: "max-content" }}>
-                {isLogged ? (
-                  <>
+              {isLogged ? (
+                <td style={{ width: "max-content" }}>
                     {admin ? (
                       <div style={{ display: "flex", width: "max-content" }}>
                         <MySelect
@@ -208,11 +207,10 @@ function Manche({ eventId, isLogged, admin }) {
                         inscription
                       </button>
                     )}
-                  </>
+                  </td>
                 ) : (
                   <></>
                 )}
-              </td>
             </tr>
           ))}
         </tbody>
