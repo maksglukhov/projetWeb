@@ -47,17 +47,25 @@ router.post("/inscriptuser", async (req, res) => {
         let userId = req.body.userId;
         //console.log("here userID*******", userId);
         try {
-          const addInscription = await pgClient.query(
-            "INSERT INTO inscription(planning_id, manche_id, user_id) VALUES ($1, $2, $3)",
-            [eventId, mancheId, userId]
+          const checkInscription = await pgClient.query(
+            "SELECT * FROM inscription WHERE user_id = $1 AND planning_id = $2 AND manche_id = $3",
+            [userId, eventId, mancheId]
           );
-          if (addInscription) {
-            res.sendStatus(200);
+          if (checkInscription.rows.length === 0) {
+            const addInscription = await pgClient.query(
+              "INSERT INTO inscription(planning_id, manche_id, user_id) VALUES ($1, $2, $3)",
+              [eventId, mancheId, userId]
+            );
+            if (addInscription) {
+              res.sendStatus(200);
+            } else {
+              res.sendStatus(500);
+            }
           } else {
-            res.sendStatus(500);
+            res.sendStatus(501);
           }
         } catch (error) {
-          res.sendStatus(501);
+          res.sendStatus(400);
           console.error(error.message);
         }
       }

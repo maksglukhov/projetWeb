@@ -52,6 +52,34 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.delete("/delete", async (req, res) => {
+  if (await checkToken(req, res)) {
+    let tokenId = req.cookies.token.tokenId;
+    let isAdmin = await checkAdmin(tokenId);
+    if (isAdmin) {
+      const id = req.body.id;
+      const eventId = req.body.eventId;
+      try {
+        const delManche = await pgClient.query(
+          "DELETE FROM manche WHERE id = $1",
+          [id]
+        );
+        if (delManche) {
+          const allManche = await pgClient.query(
+            "SELECT * FROM manche where planning_id = $1",
+            [eventId]
+          );
+          if (allManche) {
+            res.send(allManche.rows);
+          }
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    }
+  }
+});
+
 router.post("/inscription", async (req, res) => {
   if (await checkToken(req, res)) {
     let tokenId = req.cookies.token.tokenId;

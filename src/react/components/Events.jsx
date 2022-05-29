@@ -15,10 +15,6 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
   const [date, setDate] = useState(new Date());
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const [mancheName, setMancheName] = useState("");
-  const [mancheOrdre, setMancheOrdre] = useState("");
-  const [refreshTabManche, setRefreshTabManche] = useState(false);
-
   function test() {
     console.log(event);
     console.log(date);
@@ -59,31 +55,6 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
   }
   //TODO add component manche with id in props
 
-  function addManche(e, id) {
-    //e.preventDefault();
-    //console.log(event);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        eventId: id,
-        mancheName: mancheName,
-        mancheOrdre: mancheOrdre,
-      }),
-    };
-    fetch("api/manche/addmanche", requestOptions)
-      .then((res) => res.json())
-      .then((data) => {
-        setApiResponseManche({
-          data: data,
-          loading: false,
-        });
-        console.log(apiResponseManche);
-      });
-    setRefreshTabManche(true);
-    console.log(id);
-  }
-
   useEffect(() => {
     fetch("api/events")
       .then((res) => res.json())
@@ -106,6 +77,7 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
         <div className='input-group mb-3 justify-content-center'>
           <div className='input-group-prepend'>
             <form className='form-inline' onSubmit={(e) => sendEvent(e)}>
+              <h2>Enter the following information to add the event</h2>
               <div className='p-2'>
                 <input
                   className='form-control'
@@ -140,7 +112,6 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
             <th scope='col'>Event</th>
             <th scope='col'>Date</th>
             {admin ? <th scope='col'>Delete event</th> : <th scope='col'></th>}
-            {admin ? <th scope='col'>Add manche</th> : <th scope='col'></th>}
           </tr>
         </thead>
         <>
@@ -157,33 +128,6 @@ function Events({ admin, isLogged, setIsLogged, setIsAdmin }) {
                       onClick={() => deleteEvent(elem.id)}>
                       <FaTrash />
                     </button>
-                  ) : (
-                    <div></div>
-                  )}
-                </td>
-                <td>
-                  {admin ? (
-                    <form
-                      className='form-inline'
-                      onSubmit={(e) => addManche(e, elem.id)}>
-                      <input
-                        className='form-control'
-                        id='event'
-                        type='text'
-                        placeholder='name of manche'
-                        required
-                        onChange={(e) => setMancheName(e.target.value)}
-                      />
-                      <input
-                        className='form-control'
-                        type='number'
-                        min={0}
-                        placeholder='ordre of manche'
-                        required
-                        onChange={(e) => setMancheOrdre(e.target.value)}
-                      />
-                      <button className='btn btn-primary'>Add manche</button>
-                    </form>
                   ) : (
                     <div></div>
                   )}
